@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//会員登録画面
+Route::post('/register', [RegisterController::class, 'store']);
+
