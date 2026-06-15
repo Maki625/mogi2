@@ -1,0 +1,21 @@
+.detail-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.detail-table th,
+.detail-table td {
+    border-bottom: 1px solid #ddd;
+    padding: 20px;
+    width: 200px;
+    text-align: left;
+}
+
+.detail-table th {
+    width: 50px;
+    text-align: left;
+}
+
+.text-area {
+    border: 1px solid #ddd;
+}
