@@ -50,4 +50,10 @@ class User extends Authenticatable
     public function correctionRequests() {
         return $this->hasMany(CorrectionRequest::class);
     }
+
+    public function approvedCorrectionRequests()
+    {
+    return $this->hasMany(CorrectionRequest::class, 'approved_by');
+    }
+
 }

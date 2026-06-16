@@ -26,7 +26,4 @@ class WorkBreak extends Model
         return $this->belongsTo(Attendance::class);
     }
 
-    public function correctionRequests() {
-        return $this->hasMany(CorrectionRequest::class);
-    }
 }

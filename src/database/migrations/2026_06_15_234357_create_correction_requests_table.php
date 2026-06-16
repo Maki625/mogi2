@@ -16,7 +16,7 @@ class CreateCorrectionRequestsTable extends Migration
         Schema::create('correction_requests', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('attendance_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('attendance_id')->constrained()->onDelete('cascade');
             $table->dateTime('clock_in')->nullable();
             $table->dateTime('clock_out')->nullable();
             $table->text('reason');

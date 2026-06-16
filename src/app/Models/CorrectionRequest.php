@@ -9,23 +9,41 @@ class CorrectionRequest extends Model
 {
     use HasFactory;
 
-    const STATUS_PENDING   = 'pending';
-    const STATUS_APPROVED  = 'approved';
-    const STATUS_REJECTED  = 'rejected';
+    protected $fillable = [
+        'user_id',
+        'attendance_id',
+        'clock_in',
+        'clock_out',
+        'reason',
+        'status',
+        'approved_by',
+        'approved_at',
+    ];
 
-    public function user() {
+    protected $casts = [
+    'clock_in' => 'datetime',
+    'clock_out' => 'datetime',
+    'approved_at' => 'datetime',
+    ];
+    
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function attendance() {
+    public function attendance()
+    {
         return $this->belongsTo(Attendance::class);
     }
 
-    public function break() {
-        return $this->belongsTo(WorkBreak::class);
+    public function correctionWorkbreaks()
+    {
+        return $this->hasMany(CorrectionWorkbreak::class);
     }
 
-    public function approvedBy() {
-        return $this->belongsTo(User::class, 'approved_by');
-    }
+    public function approvedBy()
+    {
+    return $this->belongsTo(User::class, 'approved_by');
+    }  
+
 }
