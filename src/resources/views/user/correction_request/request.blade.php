@@ -23,9 +23,17 @@
         <th class="content">詳細</th>
     </tr>
 
+    @foreach($requests as $request)
     <tr>
+        <td>{{ $request->status }}</td>
+        <td>{{ $request->user->name }}</td>
+        <td>{{ $request->attendance->work_date }}</td>
+        <td>{{ $request->reason }}</td>
+        <td>{{ $request->created_at }}</td>
         <td>
+            <a href="">詳細</a>
         </td>
     </tr>
+    @endforeach
 
 @endsection

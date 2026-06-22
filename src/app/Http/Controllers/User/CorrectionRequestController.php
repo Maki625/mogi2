@@ -5,8 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Attendance;
-use App\Models\WorkBreak;
+use App\Models\CorrectionRequest;
 
 
 class CorrectionRequestController extends Controller
@@ -14,12 +13,16 @@ class CorrectionRequestController extends Controller
     public function index() {
 
         $user = Auth::user();
-    
-        $attendances = Attendance::where('user_id', $user->id)
-                                ->orderBy('work_date', 'desc')
-                                ->get();
-    
-        return view('user.correction_request.request', compact('attendances'));
+        
+        $requests = CorrectionRequest::with([
+        'user',
+        'attendance'
+        ])
+        ->where('user_id', $user->id)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+        return view('user.correction_request.request', compact('requests'));
     }
     
 }
