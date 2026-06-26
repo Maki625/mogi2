@@ -25,7 +25,11 @@
 
     @foreach($requests as $request)
     <tr>
-        <td>{{ $request->status }}</td>
+        <td>@if($request->status === 'pending')
+        承認待ち
+        @elseif($request->status === 'approved')
+        承認済み
+        @endif</td>
         <td>{{ $request->user->name }}</td>
         <td>{{ $request->attendance->work_date }}</td>
         <td>{{ $request->reason }}</td>
