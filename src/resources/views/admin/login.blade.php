@@ -24,20 +24,23 @@
     </ul>
     @endif
 
-    <form class="form" method="POST" action="/admin/login">
+    <form class="form" method="POST" action="/login">
       @csrf
+      <input type="hidden" name="login_type" value="admin">
 
-    <div class="form-group">
-      <label>メールアドレス</label>
-      <input type="text" name="email" value="{{ old('email') }}">
-    </div>
+  <div class="form-group">
+    <label>メールアドレス</label>
+    <input type="text" name="email" value="{{ old('email') }}">
+  </div>
 
-    <div class="form-group">
-      <label>パスワード</label>
-      <input type="password" name="password" value="">
-    </div>
+  <div class="form-group">
+    <label>パスワード</label>
+    <input type="password" name="password">
+  </div>
 
-    <button type="submit" name="send" class="send-btn" value="create">管理者ログインする</button>
+  <button type="submit" name="send" class="send-btn" value="create">
+    管理者ログインする
+  </button>
 
     </form>
 

@@ -8,6 +8,9 @@ use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Contracts\RegisterResponse;
 use Laravel\Fortify\Contracts\LoginResponse;
 use Laravel\Fortify\Contracts\LogoutResponse;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 
 class FortifyServiceProvider extends ServiceProvider
@@ -19,12 +22,31 @@ class FortifyServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        //管理者ユーザーログイン
+        Fortify::authenticateUsing(function (Request $request) {
+    $user = User::where('email', $request->email)->first();
+
+    if (! $user || ! Hash::check($request->password, $user->password)) {
+        return null;
+    }
+
+    if ($request->login_type === 'admin' && ! $user->admin_status) {
+        return null;
+    }
+
+    if ($request->login_type !== 'admin' && $user->admin_status) {
+        return null;
+    }
+
+    return $user;
+});
+
         // ユーザー作成の処理
         Fortify::createUsersUsing(CreateNewUser::class);
 
         // 登録画面
         Fortify::registerView(function () {
-            return view('user.register'); 
+            return view('user.register');
         });
 
         // 登録後のリダイレクト先を変更
@@ -44,7 +66,9 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->instance(LoginResponse::class, new class implements LoginResponse {
         public function toResponse($request)
         {
-            return redirect('/attendance'); // ログイン後も勤怠画面へ
+            return auth()->user()->admin_status
+                ? redirect('/admin/attendance/list')// 勤怠一覧画面へ
+                : redirect('/attendance'); // 勤怠画面へ
         }
         });
 

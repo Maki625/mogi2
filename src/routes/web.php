@@ -16,6 +16,11 @@ use App\Http\Controllers\Admin\AttendanceController as AdminAttendanceController
 |
 */
 
+//管理者ユーザーログイン画面
+Route::get('/admin/login', function () {
+    return view('admin.login');
+})->name('admin.login');
+
 //ユーザー出勤登録画面
 Route::get('/attendance', [UserAttendanceController::class, 'index']);
 
