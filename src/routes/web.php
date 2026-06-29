@@ -17,9 +17,12 @@ use App\Http\Controllers\Admin\AttendanceController as AdminAttendanceController
 */
 
 //管理者ユーザーログイン画面
-Route::get('/admin/login', function () {
-    return view('admin.login');
-})->name('admin.login');
+Route::get('/admin/login', function () { return view('admin.login');
+        })->name('admin.login');
+
+
+//管理者勤怠一覧画面
+Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index']);
 
 //ユーザー出勤登録画面
 Route::get('/attendance', [UserAttendanceController::class, 'index']);
