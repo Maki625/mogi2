@@ -1,3 +1,4 @@
+
 <link rel="stylesheet" href="{{ asset('css/sanitize.css') }}">
     <link rel="stylesheet" href="{{ asset('css/common.css') }}">
     @yield('css')
@@ -9,21 +10,20 @@
         </a>
 </header>
 
-@section('content')
 
 <main>
 <link href="{{ asset('css/admin/index.css') }}" rel="stylesheet">
 
-<h2>勤怠一覧</h2>
+<h3>{{ $date->format('Y年m月d日の勤怠') }}</h3>
 
-<a href="{{ url()->current() }}?month={{ $month->copy()->subMonth()->format('Y-m') }}">
-    前月
+<a href="/admin/attendance/list?date={{ $date->copy()->subDay()->format('Y-m-d') }}">
+    前日
 </a>
 
-<h2>{{ $month->format('Y/m') }}</h2>
+<h2>{{ $date->format('Y/m/d') }}</h2>
 
-<a href="{{ url()->current() }}?month={{ $month->copy()->addMonth()->format('Y-m') }}">
-    次月
+<a href="/admin/attendance/list?date={{ $date->copy()->addDay()->format('Y-m-d') }}">
+    翌日
 </a>
 
 <table border="1" cellspacing="0" cellpadding="8">
@@ -35,27 +35,19 @@
         <th class="break_total">合計</th>
         <th class="content">詳細</th>
     </tr>
-    @foreach ($dates as $date)
 
-    @php
-        $attendance = $attendances->firstWhere(
-            'work_date',
-            $date->format('Y-m-d')
-        );
-    @endphp
-
+    @foreach($attendances as $attendance)
         <tr>
-            <td>{{ $date->format('m/d(D)') }}</td>
-            <td>{{ $attendance?->clock_in?->format('H:i') }}</td>
-            <td>{{ $attendance?->clock_out?->format('H:i') }}</td>
-            <td>{{ $attendance?->show_break_time }}</td>
-        <td></td>
-        <td>
-            <a href="/attendance/detail/{{ $date->format('Y-m-d') }}" class="content">詳細</a>
-        </td>
-    </tr>
+            <td>{{ $attendance->user->name }}</td>
+            <td>{{ optional($attendance->clock_in)->format('H:i') }}</td>
+            <td>{{ optional($attendance->clock_out)->format('H:i') }}</td>
+            <td>{{ $attendance->show_break_time }}</td>
+            <td>{{ $attendance->show_work_time }}</td>
+            <td>
+            <a href="/attendance/detail/{{ $attendance->id }}" class="content">詳細</a>
+            </td>
+        </tr>
     @endforeach
 </table>
 </main>
 
-@endsection

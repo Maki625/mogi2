@@ -21,25 +21,31 @@
             </a>
 
         <nav class="header_nav">
+            @auth
+            @if (auth()->user->admin_status)
+            <a href="/admin/attendance/list">勤怠一覧</a>
+            <a href="/admin/staff/list">スタッフ一覧</a>
+            <a href="/stamp_correction_request/list">申請一覧</a>
+            <form action="/logout" method="POST">
+                @csrf
+                <button type="submit">ログアウト</button>
+            </form>
+            @else
             <a href="/attendance" class="nav-link">勤怠</a>
 
             <a href="/attendance/list" class="nav-link">勤怠一覧</a>
 
             <a href="/stamp_correction_request/list" class="nav-link">申請</a>
 
-            @auth
             <form id="logout-form" action="/logout" method="POST">
                 @csrf
                 <button type="submit" class="nav-link">
                 ログアウト
                 </button>
             </form>
+            @endif
             @endauth
-
-
-
-
-
+        </nav>
         </div>
     </header>
 

@@ -24,22 +24,22 @@ class FortifyServiceProvider extends ServiceProvider
     {
         //管理者ユーザーログイン
         Fortify::authenticateUsing(function (Request $request) {
-    $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->first();
 
-    if (! $user || ! Hash::check($request->password, $user->password)) {
-        return null;
-    }
+        if (! $user || ! Hash::check($request->password, $user->password)) {
+            return null;
+        }
 
-    if ($request->login_type === 'admin' && ! $user->admin_status) {
-        return null;
-    }
+        if ($request->login_type === 'admin' && ! $user->admin_status) {
+            return null;
+        }
 
-    if ($request->login_type !== 'admin' && $user->admin_status) {
-        return null;
-    }
+        if ($request->login_type !== 'admin' && $user->admin_status) {
+            return null;
+        }
 
-    return $user;
-});
+        return $user;
+        });
 
         // ユーザー作成の処理
         Fortify::createUsersUsing(CreateNewUser::class);
@@ -63,13 +63,15 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         // ログイン後のリダイレクト先を変更
-        $this->app->instance(LoginResponse::class, new class implements LoginResponse {
-        public function toResponse($request)
-        {
-            return auth()->user()->admin_status
-                ? redirect('/admin/attendance/list')// 勤怠一覧画面へ
-                : redirect('/attendance'); // 勤怠画面へ
-        }
+        $this->app->singleton(LoginResponse::class, function () {
+            return new class implements LoginResponse {
+                public function toResponse($request)
+                {
+                    return auth()->user()->admin_status
+                        ? redirect('/admin/attendance/list')
+                        : redirect('/attendance');
+                }
+            };
         });
 
         $this->app->instance(LogoutResponse::class, new class implements LogoutResponse {
@@ -78,6 +80,5 @@ class FortifyServiceProvider extends ServiceProvider
             return redirect('/login');
         }
         });
-
     }
 }

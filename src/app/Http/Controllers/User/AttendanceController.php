@@ -96,7 +96,7 @@ class AttendanceController extends Controller
         $user = Auth::user();
 
         $date = $id;
-        
+
         $attendance = Attendance::with('workbreaks')
         ->where('user_id', $user->id)
         ->where('work_date', $date)

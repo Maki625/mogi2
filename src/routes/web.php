@@ -16,13 +16,25 @@ use App\Http\Controllers\Admin\AttendanceController as AdminAttendanceController
 |
 */
 
+
+Route::get('/', function () {
+    if (auth()->check() && auth()->user()->admin_status) {
+        return redirect('/admin/attendance/list');
+    }
+
+    if (auth()->check()) {
+        return redirect('/attendance');
+    }
+
+    return redirect('/admin/login');
+});
+
 //管理者ユーザーログイン画面
 Route::get('/admin/login', function () { return view('admin.login');
         })->name('admin.login');
 
-
 //管理者勤怠一覧画面
-Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index']);
+Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index'])->middleware('admin');
 
 //ユーザー出勤登録画面
 Route::get('/attendance', [UserAttendanceController::class, 'index']);
