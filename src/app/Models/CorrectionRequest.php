@@ -38,7 +38,7 @@ class CorrectionRequest extends Model
 
     public function correctionWorkbreaks()
     {
-        return $this->hasMany(CorrectionWorkbreak::class);
+        return $this->hasMany(CorrectionWorkBreak::class);
     }
 
     public function approvedBy()

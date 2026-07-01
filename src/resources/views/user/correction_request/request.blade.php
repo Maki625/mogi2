@@ -6,13 +6,13 @@
 <link href="{{ asset('css/user/request.css') }}" rel="stylesheet">
 
 <h2>申請一覧</h2>
-<table border="1" cellspacing="0" cellpadding="8">
-
     <div class="section-header">
         <a href="" class="section-link {{ request('tab') === 'sold' || !request()->has('tab') ? 'active' : '' }}">承認待ち</a>
         <a href="" class="section-link {{ request('tab') === 'bought' ? 'active' : '' }}">承認済み</a>
     </div>
     <hr class="divider">
+
+    <table border="1" cellspacing="0" cellpadding="8">
 
     <tr>
         <th class="status">状態</th>

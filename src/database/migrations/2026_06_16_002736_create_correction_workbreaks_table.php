@@ -17,8 +17,8 @@ class CreateCorrectionWorkbreaksTable extends Migration
             $table->id();
             $table->foreignId('correction_request_id')->constrained()
                     ->onDelete('cascade');
-            $table->dateTime('break_start')->nullable();
-            $table->dateTime('break_end')->nullable();
+            $table->timestamp('break_start')->nullable();
+            $table->timestamp('break_end')->nullable();
             $table->timestamps();
         });
     }

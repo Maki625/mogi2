@@ -80,7 +80,7 @@
     <tr>
         <th class="label">備考</th>
         <td class="value">
-            <textarea class="text-area"></textarea>
+            <textarea class="text-area" name="reason"></textarea>
         </td>
     </tr>
 

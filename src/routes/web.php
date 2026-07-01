@@ -16,7 +16,7 @@ use App\Http\Controllers\Admin\AttendanceController as AdminAttendanceController
 |
 */
 
-
+//ログイン管理
 Route::get('/', function () {
     return redirect('/login');
 });
@@ -29,9 +29,11 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index']);
 });
 
+//ユーザーホーム
 Route::get('/attendance', [UserAttendanceController::class, 'index'])
     ->name('user.attendance.index');
 
+//管理者ホーム
 Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index'])
     ->name('admin.attendance.index');
 
