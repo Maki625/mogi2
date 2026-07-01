@@ -29,8 +29,11 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index']);
 });
 
-//ユーザー出勤登録画面
-Route::get('/attendance', [UserAttendanceController::class, 'index']);
+Route::get('/attendance', [UserAttendanceController::class, 'index'])
+    ->name('user.attendance.index');
+
+Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index'])
+    ->name('admin.attendance.index');
 
 // 出勤
 Route::post('/attendance/start', [UserAttendanceController::class, 'start']);

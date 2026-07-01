@@ -16,7 +16,14 @@
     <!-- ヘッダー -->
     <header class="header">
         <div class="header__inner">
-            <a class="header__logo" href="/">
+            @php
+    $homeUrl = auth()->check()
+        ? (auth()->user()->admin_status
+            ? route('admin.attendance.index')
+            : route('user.attendance.index'))
+        : route('login');
+@endphp
+            <a class="header__logo" href="{{ $homeUrl }}">
                 <img src="/images/logo.svg" alt="logo">
             </a>
 

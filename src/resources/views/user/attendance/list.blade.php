@@ -29,14 +29,13 @@
     @foreach ($dates as $date)
 
     @php
-        $attendance = $attendances->firstWhere(
-            'work_date',
-            $date->format('Y-m-d')
-        );
+        $attendance = $attendances->first(function ($attendance) use ($date) {
+        return $attendance->work_date->format('Y-m-d') === $date->format('Y-m-d');
+    });
     @endphp
 
         <tr>
-            <td>{{ $date->format('m/d(D)') }}</td>
+            <td>{{ $date->isoformat('MM/DD(ddd)') }}</td>
             <td>{{ $attendance?->clock_in?->format('H:i') }}</td>
             <td>{{ $attendance?->clock_out?->format('H:i') }}</td>
             <td>{{ $attendance?->show_break_time }}</td>

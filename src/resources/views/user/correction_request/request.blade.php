@@ -31,9 +31,9 @@
         承認済み
         @endif</td>
         <td>{{ $request->user->name }}</td>
-        <td>{{ $request->attendance->work_date }}</td>
+        <td>{{ $request->attendance->work_date->format('Y/m/d') }}</td>
         <td>{{ $request->reason }}</td>
-        <td>{{ $request->created_at }}</td>
+        <td>{{ $request->created_at->format('Y/m/d') }}</td>
         <td>
             <a href="">詳細</a>
         </td>

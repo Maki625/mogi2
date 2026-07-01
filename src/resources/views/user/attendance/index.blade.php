@@ -16,7 +16,7 @@
     </h2>
 
     <!-- 日付 -->
-    <h3>{{ now()->format('Y年m月d日 (D)') }}</h3>
+    <h3>{{ now()->isoformat('Y年M月D日 (ddd)') }}</h3>
 
     <!-- 時間 -->
     <h1>{{ now()->format('H:i') }}</h1>
