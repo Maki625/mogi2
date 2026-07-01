@@ -22,13 +22,15 @@
 
         <nav class="header_nav">
             @auth
-            @if (auth()->user->admin_status)
+            @if (auth()->user()->admin_status)
             <a href="/admin/attendance/list">勤怠一覧</a>
             <a href="/admin/staff/list">スタッフ一覧</a>
             <a href="/stamp_correction_request/list">申請一覧</a>
             <form action="/logout" method="POST">
                 @csrf
-                <button type="submit">ログアウト</button>
+                <input type="hidden" name="logout_type" value="admin">
+                <button type="submit">ログアウト></button>
+                </input>
             </form>
             @else
             <a href="/attendance" class="nav-link">勤怠</a>

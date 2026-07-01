@@ -1,15 +1,6 @@
+@extends('layouts.app')
 
-<link rel="stylesheet" href="{{ asset('css/sanitize.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/common.css') }}">
-    @yield('css')
-
-<header class="header">
-    <div class="header__inner">
-        <a class="header__logo" href="/">
-        <img src="/images/logo.svg" alt="logo">
-        </a>
-</header>
-
+@section('content')
 
 <main>
 <link href="{{ asset('css/admin/index.css') }}" rel="stylesheet">
@@ -51,3 +42,4 @@
 </table>
 </main>
 
+@endsection
