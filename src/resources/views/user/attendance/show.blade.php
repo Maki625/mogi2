@@ -6,6 +6,14 @@
 
 <h1>勤怠詳細</h1>
 
+@if ($errors->any())
+    <ul>
+        @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+@endif
+
 <table class="detail-table">
 
     <tr>
@@ -27,14 +35,14 @@
             <input
             type="time"
             name="clock_in"
-            value="{{ $attendance?->clock_in?->format('H:i') }}">
+            value="{{ old('clock_in', $attendance?->clock_in?->format('H:i')) }}">
 
             <span>～</span>
 
             <input
             type="time"
             name="clock_out"
-            value="{{ $attendance?->clock_out?->format('H:i') }}">
+            value="{{ old('clock_out', $attendance?->clock_out?->format('H:i')) }}">
         </td>
     </tr>
 
@@ -48,14 +56,14 @@
             <input
             type="time"
             name="break1_start"
-            value="{{ $break1?->break_start?->format('H:i') }}">
+            value="{{ old('break1_start', $break1?->break_start?->format('H:i')) }}">
 
             <span>〜</span>
 
             <input
             type="time"
             name="break1_end"
-            value="{{ $break1?->break_end?->format('H:i') }}">
+            value="{{ old('break1_end', $break1?->break_end?->format('H:i')) }}">
 
         </td>
     </tr>
@@ -66,21 +74,21 @@
         <input
             type="time"
             name="break2_start"
-            value="{{ $break2?->break_start?->format('H:i') }}">
+            value="{{ old('break2_start', $break2?->break_start?->format('H:i')) }}">
 
         <span>〜</span>
 
         <input
             type="time"
             name="break2_end"
-            value="{{ $break2?->break_end?->format('H:i') }}">
+            value="{{ old('break2_end', $break2?->break_end?->format('H:i')) }}">
     </td>
     </tr>
 
     <tr>
         <th class="label">備考</th>
         <td class="value">
-            <textarea class="text-area" name="reason"></textarea>
+            <textarea class="text-area" name="reason">{{ old('reason') }}</textarea>
         </td>
     </tr>
 

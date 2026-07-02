@@ -9,6 +9,7 @@ use App\Models\CorrectionRequest;
 use App\Models\Attendance;
 use App\Models\CorrectionWorkBreak;
 use Carbon\Carbon;
+use App\Http\Requests\StoreCorrectionRequest;
 
 
 class CorrectionRequestController extends Controller
@@ -27,23 +28,13 @@ class CorrectionRequestController extends Controller
 
         return view('user.correction_request.request', compact('requests'));
     }
-    
-    public function store(Request $request, $id) {
+
+    public function store(StoreCorrectionRequest $request, $id) {
         $attendance = Attendance::where('user_id', Auth::id())
         ->where('id', $id)
         ->firstOrFail();
 
         $baseDate = $attendance->work_date->format('Y-m-d');
-
-        $request->validate([
-            'clock_in' => ['required'],
-            'clock_out' => ['required'],
-            'break1_start' => ['nullable'],
-            'break1_end' => ['nullable'],
-            'break2_start' => ['nullable'],
-            'break2_end' => ['nullable'],
-            'reason' => ['required'],
-        ]);
 
         $correctionRequest = CorrectionRequest::create([
             'user_id' => Auth::id(),
