@@ -41,12 +41,12 @@ class StoreCorrectionRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'clock_in.required' => '出勤時間を入力してください。',
-            'clock_out.required' => '退勤時間を入力してください。',
-            'clock_out.after' => '出勤時間もしくは退勤時間が不適切な値です。',
-            'break1_end.after' => '休憩時間が不適切な値です。',
-            'break2_end.after' => '休憩時間が不適切な値です。',
-            'reason.required' => '備考を記入してください。',
+            'clock_in.required' => '出勤時間を入力してください',
+            'clock_out.required' => '退勤時間を入力してください',
+            'clock_out.after' => '出勤時間もしくは退勤時間が不適切な値です',
+            'break1_end.after' => '休憩時間が不適切な値です',
+            'break2_end.after' => '休憩時間が不適切な値です',
+            'reason.required' => '備考を記入してください',
         ];
     }
 
@@ -56,14 +56,6 @@ public function withValidator($validator)
 
         $in = \Carbon\Carbon::parse(request('clock_in'));
         $out = \Carbon\Carbon::parse(request('clock_out'));
-
-        // ① 出勤・退勤
-        if ($in > $out) {
-            $validator->errors()->add(
-                'clock_in',
-                '出勤時間もしくは退勤時間が不適切な値です'
-            );
-        }
 
         // ② 休憩1
         $b1s = request('break1_start') ? Carbon::parse(request('break1_start')) : null;

@@ -94,25 +94,22 @@ class AttendanceSeeder extends Seeder
             ['08:00:00', '21:00:00'],
         ];
 
-        $currentMonth = Carbon::now()->startOfMonth();
-
-        $dateCount = 0;
+        $date = Carbon::now()->startOfMonth();
 
         foreach ($patterns as $pattern) {
 
-            $workDate = $currentMonth
-                ->copy()
-                ->addDays($dateCount)
-                ->format('Y-m-d');
+            while (!$date->isWeekday()) {
+                $date->addDay();
+            }
 
             $this->createAttendance(
                 $user1->id,
-                $workDate,
+                $date->format('Y-m-d'),
                 $pattern[0],
                 $pattern[1]
             );
 
-            $dateCount++;
+            $date->addDay();
         }
 
         //ユーザー2
