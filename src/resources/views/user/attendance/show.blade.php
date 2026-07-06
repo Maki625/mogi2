@@ -30,12 +30,12 @@
             <input type="time"
             name="clock_in"
             value="{{ old('clock_in', $correction?->clock_in->format('H:i') ?? optional($attendance->clock_in)->format('H:i')) }}"
-            @disabled($pending)>
+            @if($pending) disabled @endif>
 
             <input type="time"
             name="clock_out"
             value="{{ old('clock_out', $correction?->clock_out->format('H:i') ?? optional($attendance->clock_out)->format('H:i')) }}"
-            @disabled($pending)>
+            @if($pending) disabled @endif>
         </td>
     </tr>
 
@@ -48,13 +48,13 @@
         <td class="value">
             <input type="time" name="break1_start"
             value="{{ old('break1_start', $break1?->break_start?->format('H:i')) }}"
-            @disabled($pending)>
+            @if($pending) disabled @endif>
 
             <span>〜</span>
 
             <input type="time" name="break1_end"
             value="{{ old('break1_end', $break1?->break_end?->format('H:i')) }}"
-            @disabled($pending)>
+            @if($pending) disabled @endif>
         </td>
     </tr>
 
@@ -63,13 +63,13 @@
     <td class="value">
         <input type="time" name="break2_start"
         value="{{ old('break2_start', $break2?->break_start?->format('H:i')) }}"
-        @disabled($pending)>
+        @if($pending) disabled @endif>
 
         <span>〜</span>
 
         <input type="time" name="break2_end"
         value="{{ old('break2_end', $break2?->break_end?->format('H:i')) }}"
-        @disabled($pending)>
+        @if($pending) disabled @endif>
     </td>
     </tr>
 
