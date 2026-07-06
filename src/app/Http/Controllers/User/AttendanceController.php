@@ -95,14 +95,24 @@ class AttendanceController extends Controller
     {
         $user = Auth::user();
 
-        $date = $id;
+        $date = Carbon::parse($id);
 
-        $attendance = Attendance::with('workbreaks')
+        $attendance = Attendance::with('workbreaks', 'correctionRequests')
         ->where('user_id', $user->id)
         ->where('work_date', $date)
         ->first();
 
-        return view('user.attendance.show', compact('attendance', 'date', 'user'));
+        $correction = $attendance
+            ? $attendance->correctionRequests()->latest()->first()
+            : null;
+
+        $correctionBreaks = $correction
+        ? $correction->correctionWorkBreaks
+        : $attendance->workbreaks;
+
+        $pending = $correction && $correction->status === 'pending';
+
+        return view('user.attendance.show', compact('attendance', 'date', 'user', 'correction', 'correctionBreaks', 'pending', 'id'));
     }
 
     public function list(Request $request) {
@@ -125,6 +135,9 @@ class AttendanceController extends Controller
                         ->orderBy('work_date', 'desc')
                         ->get();
 
+        $attendanceMap = $attendances->keyBy(function ($attendance) {
+        return $attendance->work_date->format('Y-m-d'); });
+
         foreach ($attendances as $attendance) {
         $totalMinutes = 0;
         foreach ($attendance->workBreaks as $break) {
@@ -146,6 +159,6 @@ class AttendanceController extends Controller
             : null;
         }
 
-    return view('user.attendance.list', compact('attendances', 'dates', 'month'));
+    return view('user.attendance.list', compact('attendances', 'attendanceMap', 'dates', 'month'));
     }
 }

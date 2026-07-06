@@ -15,6 +15,11 @@ class CorrectionWorkbreak extends Model
         'break_end',
     ];
 
+    protected $casts = [
+        'break_start' => 'datetime',
+        'break_end'   => 'datetime',
+    ];
+
     public function correctionRequest()
     {
         return $this->belongsTo(CorrectionRequest::class);

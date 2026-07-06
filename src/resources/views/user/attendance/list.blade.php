@@ -29,9 +29,7 @@
     @foreach ($dates as $date)
 
     @php
-        $attendance = $attendances->first(function ($attendance) use ($date) {
-        return $attendance->work_date->format('Y-m-d') === $date->format('Y-m-d');
-    });
+        $attendance = $attendanceMap[$date->format('Y-m-d')] ?? null;
     @endphp
 
         <tr>

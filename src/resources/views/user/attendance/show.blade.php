@@ -19,78 +19,78 @@
 
     <tr>
         <th class="label">日付</th>
-        <td class="value">{{ \Carbon\Carbon::parse($date)->format('Y年n月j日') }}</td>
+        <td class="value">{{ $date->format('Y年n月j日') }}</td>
     </tr>
-
     <form class="form" method="POST" action="/attendance/fix/{{ $attendance->id }}">
     @csrf
 
     <tr>
         <th class="label">出勤・退勤</th>
         <td class="value">
-            <input
-            type="time"
+            <input type="time"
             name="clock_in"
-            value="{{ old('clock_in', $attendance?->clock_in?->format('H:i')) }}">
+            value="{{ old('clock_in', $correction?->clock_in->format('H:i') ?? optional($attendance->clock_in)->format('H:i')) }}"
+            @disabled($pending)>
 
-            <span>～</span>
-
-            <input
-            type="time"
+            <input type="time"
             name="clock_out"
-            value="{{ old('clock_out', $attendance?->clock_out?->format('H:i')) }}">
+            value="{{ old('clock_out', $correction?->clock_out->format('H:i') ?? optional($attendance->clock_out)->format('H:i')) }}"
+            @disabled($pending)>
         </td>
     </tr>
 
     <tr>
         <th class="label">休憩</th>
         @php
-        $break1 = $attendance?->workbreaks[0] ?? null;
-        $break2 = $attendance?->workbreaks[1] ?? null;
+        $break1 = $correctionBreaks[0] ?? null;
+        $break2 = $correctionBreaks[1] ?? null;
         @endphp
         <td class="value">
-            <input
-            type="time"
-            name="break1_start"
-            value="{{ old('break1_start', $break1?->break_start?->format('H:i')) }}">
+            <input type="time" name="break1_start"
+            value="{{ old('break1_start', $break1?->break_start?->format('H:i')) }}"
+            @disabled($pending)>
 
             <span>〜</span>
 
-            <input
-            type="time"
-            name="break1_end"
-            value="{{ old('break1_end', $break1?->break_end?->format('H:i')) }}">
-
+            <input type="time" name="break1_end"
+            value="{{ old('break1_end', $break1?->break_end?->format('H:i')) }}"
+            @disabled($pending)>
         </td>
     </tr>
 
     <tr>
     <th class="label">休憩2</th>
     <td class="value">
-        <input
-            type="time"
-            name="break2_start"
-            value="{{ old('break2_start', $break2?->break_start?->format('H:i')) }}">
+        <input type="time" name="break2_start"
+        value="{{ old('break2_start', $break2?->break_start?->format('H:i')) }}"
+        @disabled($pending)>
 
         <span>〜</span>
 
-        <input
-            type="time"
-            name="break2_end"
-            value="{{ old('break2_end', $break2?->break_end?->format('H:i')) }}">
+        <input type="time" name="break2_end"
+        value="{{ old('break2_end', $break2?->break_end?->format('H:i')) }}"
+        @disabled($pending)>
     </td>
     </tr>
 
     <tr>
         <th class="label">備考</th>
         <td class="value">
-            <textarea class="text-area" name="reason">{{ old('reason') }}</textarea>
+            <textarea class="text-area" name="reason" @if($pending) disabled @endif>
+                {{ $correction?->reason ?? old('reason') }}</textarea>
         </td>
     </tr>
 
 </table>
+    @if ($pending)
+        <p class="text-danger">
+            承認待ちのため修正はできません。
+        </p>
+    @else
+    <button type="submit" name="send" class="send-btn" value="fix">
+        修正する</button>
+    @endif
 
-<button type="submit" name="send" class="send-btn" value="fix">修正する</button>
-</form>
+    </form>
 
 @endsection
