@@ -14,19 +14,23 @@ use App\Http\Requests\StoreCorrectionRequest;
 
 class CorrectionRequestController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
 
         $user = Auth::user();
-        
+
+        $tab = $request->query('tab', 'pending');
+
         $requests = CorrectionRequest::with([
         'user',
         'attendance'
         ])
         ->where('user_id', $user->id)
+        ->when($tab === 'pending', fn($q) => $q->where('status', 'pending'))
+        ->when($tab === 'approved', fn($q) => $q->where('status', 'approved'))
         ->orderBy('created_at', 'desc')
         ->get();
 
-        return view('user.correction_request.request', compact('requests'));
+        return view('user.correction_request.request', compact('requests', 'tab'));
     }
 
     public function store(StoreCorrectionRequest $request, $id) {
