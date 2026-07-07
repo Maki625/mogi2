@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Attendance;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
@@ -17,6 +18,8 @@ class AttendanceController extends Controller
 
         $attendances = Attendance::with('user')
                 ->whereDate('work_date', $date)
+                ->whereHas('user', function ($query) {
+                        $query->where('admin_status', false); })
                 ->orderBy('user_id')
                 ->get();
 
