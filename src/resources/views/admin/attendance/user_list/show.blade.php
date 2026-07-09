@@ -5,7 +5,7 @@
 <main>
 <link href="{{ asset('css/user/list.css') }}" rel="stylesheet">
 
-<h2>〇〇さんの勤怠一覧</h2>
+<h2>{{ $user->name }}さんの勤怠一覧</h2>
 
 <a href="{{ url()->current() }}?month={{ $month->copy()->subMonth()->format('Y-m') }}">
     前月
@@ -39,7 +39,7 @@
             <td>{{ $attendance?->show_break_time }}</td>
         <td></td>
         <td>
-            <a href="/attendance/detail/{{ $date->format('Y-m-d') }}" class="content">詳細</a>
+            <a href="/admin/attendance/{{ $user->id }}/{{ $date->format('Y-m-d') }}" class="content">詳細</a>
         </td>
     </tr>
     @endforeach

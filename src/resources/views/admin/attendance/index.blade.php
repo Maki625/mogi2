@@ -35,7 +35,7 @@
             <td>{{ $attendance->show_break_time }}</td>
             <td>{{ $attendance->show_work_time }}</td>
             <td>
-            <a href="/attendance/detail/{{ $attendance->id }}" class="content">詳細</a>
+            <a href="/admin/attendance/{{ $attendance->user_id }}/{{ $date->format('Y-m-d') }}" class="content">詳細</a>
             </td>
         </tr>
     @endforeach

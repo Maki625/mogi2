@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\AttendanceController as UserAttendanceController;
 use App\Http\Controllers\User\CorrectionRequestController as UserCorrectionRequestController;
 use App\Http\Controllers\Admin\AttendanceController as AdminAttendanceController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -60,3 +62,12 @@ Route::post('/attendance/fix/{id}', [UserCorrectionRequestController::class, 'st
 
 //申請一覧ページ
 Route::get('/stamp_correction_request/list', [UserCorrectionRequestController::class, 'index']);
+
+//スタッフ一覧ページ
+Route::get('/admin/staff/list', [AdminUserController::class, 'index']);
+
+//スタッフ別勤怠一覧ページ
+Route::get('/admin/attendance/list/{id}', [AdminAttendanceController::class, 'list']);
+
+//スタッフ別勤怠詳細ページ
+Route::get('/admin/attendance/{user_id}/{date}', [AdminAttendanceController::class, 'index']);
