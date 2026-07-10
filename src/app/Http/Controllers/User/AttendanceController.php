@@ -143,20 +143,36 @@ class AttendanceController extends Controller
         foreach ($attendance->workBreaks as $break) {
             if ($break->break_start && $break->break_end) {
 
-                $start = Carbon::parse($break->break_start);
-                $end   = Carbon::parse($break->break_end);
-                $totalMinutes += $start->diffInMinutes($end);
+                $breakstart = Carbon::parse($break->break_start);
+                $breakend   = Carbon::parse($break->break_end);
+                $totalMinutes += $breakstart->diffInMinutes($breakend);
             }
         }
 
         $attendance->show_break_time =
         $totalMinutes > 0
         ? sprintf(
-            '%02d : %02d ',
+            '%02d:%02d ',
             intdiv($totalMinutes,60),
             $totalMinutes % 60
             )
             : null;
+
+        if ($attendance->clock_in && $attendance->clock_out) {
+
+    $workMinutes =
+        $attendance->clock_in->diffInMinutes($attendance->clock_out)
+        - $totalMinutes;
+
+    $attendance->show_work_time = sprintf(
+        '%02d : %02d',
+        intdiv($workMinutes, 60),
+        $workMinutes % 60
+    );
+
+} else {
+    $attendance->show_work_time = null;
+}
         }
 
     return view('user.attendance.list', compact('attendances', 'attendanceMap', 'dates', 'month'));

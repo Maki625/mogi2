@@ -17,13 +17,52 @@ class AttendanceController extends Controller
                 ? Carbon::parse($request->date)
                 : today();
 
-        $attendances = Attendance::with('user')
+        $attendances = Attendance::with('user', 'workBreaks')
                 ->whereDate('work_date', $date)
                 ->whereHas('user', function ($query) {
                         $query->where('admin_status', false); })
                 ->orderBy('user_id')
                 ->get();
 
+        foreach ($attendances as $attendance) {
+
+        $totalMinutes = 0;
+
+        foreach ($attendance->workBreaks as $break) {
+                if ($break->break_start && $break->break_end) {
+
+                $breakStart = Carbon::parse($break->break_start);
+                $breakEnd = Carbon::parse($break->break_end);
+
+                $totalMinutes += $breakStart->diffInMinutes($breakEnd);
+                }
+        }
+
+        $attendance->show_break_time =
+                $totalMinutes > 0
+                ? sprintf(
+                '%02d:%02d',
+                intdiv($totalMinutes, 60),
+                $totalMinutes % 60
+                )
+                : null;
+
+        if ($attendance->clock_in && $attendance->clock_out) {
+
+                $workMinutes =
+                $attendance->clock_in->diffInMinutes($attendance->clock_out)
+                - $totalMinutes;
+
+                $attendance->show_work_time = sprintf(
+                '%02d:%02d',
+                intdiv($workMinutes, 60),
+                $workMinutes % 60
+                );
+
+        } else {
+                $attendance->show_work_time = null;
+                }
+        }
         return view ('admin.attendance.index', compact('date', 'attendances'));
         }
 

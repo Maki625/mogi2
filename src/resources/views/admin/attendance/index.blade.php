@@ -23,7 +23,7 @@
         <th class="clock_in">出勤</th>
         <th class="clock_out">退勤</th>
         <th class="break_time">休憩</th>
-        <th class="break_total">合計</th>
+        <th class="work_total">合計</th>
         <th class="content">詳細</th>
     </tr>
 

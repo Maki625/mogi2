@@ -23,7 +23,7 @@
         <th class="clock_in">出勤</th>
         <th class="clock_out">退勤</th>
         <th class="break_time">休憩</th>
-        <th class="break_total">合計</th>
+        <th class="work_total">合計</th>
         <th class="content">詳細</th>
     </tr>
     @foreach ($dates as $date)
@@ -37,7 +37,7 @@
             <td>{{ $attendance?->clock_in?->format('H:i') }}</td>
             <td>{{ $attendance?->clock_out?->format('H:i') }}</td>
             <td>{{ $attendance?->show_break_time }}</td>
-        <td></td>
+            <td>{{ $attendance?->show_work_time }}</td>
         <td>
             <a href="/attendance/detail/{{ $date->format('Y-m-d') }}" class="content">詳細</a>
         </td>

@@ -5,6 +5,8 @@ use App\Http\Controllers\User\AttendanceController as UserAttendanceController;
 use App\Http\Controllers\User\CorrectionRequestController as UserCorrectionRequestController;
 use App\Http\Controllers\Admin\AttendanceController as AdminAttendanceController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\Admin\CorrectionRequestController as AdminCorrectionRequestController;
+
 
 
 /*
@@ -31,13 +33,9 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index']);
 });
 
-//ユーザーホーム
+//一般ユーザーホーム
 Route::get('/attendance', [UserAttendanceController::class, 'index'])
     ->name('user.attendance.index');
-
-//管理者ホーム
-Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index'])
-    ->name('admin.attendance.index');
 
 // 出勤
 Route::post('/attendance/start', [UserAttendanceController::class, 'start']);
@@ -63,6 +61,10 @@ Route::post('/attendance/fix/{id}', [UserCorrectionRequestController::class, 'st
 //申請一覧ページ
 Route::get('/stamp_correction_request/list', [UserCorrectionRequestController::class, 'index']);
 
+//管理者ホーム
+Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index'])
+    ->name('admin.attendance.index');
+
 //スタッフ一覧ページ
 Route::get('/admin/staff/list', [AdminUserController::class, 'index']);
 
@@ -70,4 +72,7 @@ Route::get('/admin/staff/list', [AdminUserController::class, 'index']);
 Route::get('/admin/attendance/list/{id}', [AdminAttendanceController::class, 'list']);
 
 //スタッフ別勤怠詳細ページ
-Route::get('/admin/attendance/{user_id}/{date}', [AdminAttendanceController::class, 'index']);
+Route::get('/admin/attendance/{user_id}/{date}', [AdminAttendanceController::class, 'show']);
+
+//管理者申請一覧ページ
+Route::get('/stamp_correction_request/list', [AdminCorrectionRequestController::class, 'index']);

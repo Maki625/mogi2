@@ -3,7 +3,7 @@
 @section('content')
 
 <main>
-<link href="{{ asset('css/user/request.css') }}" rel="stylesheet">
+<link href="{{ asset('css/admin/request.css') }}" rel="stylesheet">
 
 <h2>申請一覧</h2>
     <div class="section-header">
@@ -37,7 +37,7 @@
         <td>{{ $request->reason }}</td>
         <td>{{ $request->created_at->format('Y/m/d') }}</td>
         <td>
-        <a href="/attendance/detail/{{ $request->attendance->work_date->format('Y-m-d') }}" class="content">詳細</a>
+        <a href="/admin/attendance/{{ $request->user_id }}/{{ $request->attendance->work_date->format('Y-m-d') }}" class="content">詳細</a>
         </td>
     </tr>
     @endforeach
