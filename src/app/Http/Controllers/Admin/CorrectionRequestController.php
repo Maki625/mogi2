@@ -7,12 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Attendance;
 use App\Models\CorrectionRequest;
+use App\Models\WorkBreak;
 
 
 class CorrectionRequestController extends Controller
 {
-    public function index (Request $request) {
-        $tab = $request->query('tab', 'pending');
+    public function index (Request $request)
+    {
+    $tab = $request->query('tab', 'pending');
 
     $requests = CorrectionRequest::with([
         'user',
@@ -30,8 +32,47 @@ class CorrectionRequestController extends Controller
     ->get();
 
     return view(
-        'admin.correction_request.request',
+        'admin.attendance.request',
         compact('requests', 'tab')
     );
+    }
+
+    public function approve($id)
+    {
+        $correction = CorrectionRequest::with(
+            'correctionWorkBreaks'
+        )
+        ->findOrFail($id);
+
+        $attendance = $correction->attendance;
+
+        // 出勤・退勤を反映
+        $attendance->update([
+            'clock_in' => $correction->clock_in,
+            'clock_out' => $correction->clock_out,
+        ]);
+
+        // 元の休憩を削除
+        WorkBreak::where(
+            'attendance_id',
+            $attendance->id
+            )->delete();
+
+        // 修正申請された休憩を登録
+        foreach($correction->correctionWorkBreaks as $break){
+
+            WorkBreak::create([
+                'attendance_id' => $attendance->id,
+                'break_start' => $break->break_start,
+                'break_end' => $break->break_end,
+            ]);
+        }
+
+        // ステータス変更
+        $correction->update([
+            'status' => 'approved',
+        ]);
+
+        return back();
     }
 }

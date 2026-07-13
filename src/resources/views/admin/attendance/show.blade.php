@@ -77,20 +77,42 @@
         <th class="label">備考</th>
         <td class="value">
             <textarea class="text-area" name="reason" @if($pending) disabled @endif>
-                {{ $correction?->reason ?? old('reason') }}</textarea>
+                {{ old( 'reason',
+            $pending
+            ?
+            $correction?->reason
+            :
+            $attendance?->reason
+            ) }}</textarea>
         </td>
     </tr>
 
 </table>
     @if ($pending)
-        <p class="text-danger">
-            承認待ちのため修正はできません。
-        </p>
-    @else
-    <button type="submit" name="send" class="send-btn" value="fix">
-        修正する</button>
-    @endif
+    <form method="POST" action="/admin/correction/{{ $correction->id }}/approve">
 
+    @csrf
+
+    <button type="submit">
+    承認する
+    </button>
     </form>
+
+    @elseif($approved)
+
+    <p>
+    承認済み
+    </p>
+
+    @else
+
+    <form method="POST" action="/admin/attendance/fix/{{ $attendance->id }}">
+    @csrf
+
+    <button type="submit">
+    修正する
+    </button>
+    </form>
+    @endif
 
 @endsection

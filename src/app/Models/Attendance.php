@@ -26,7 +26,7 @@ class Attendance extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function workbreaks() {
+    public function workBreaks() {
         return $this->hasMany(WorkBreak::class);
     }
 

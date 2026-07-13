@@ -134,7 +134,7 @@ class AttendanceController extends Controller
 
                 $user = User::findOrFail($user_id);
 
-                $attendance = Attendance::with('workbreaks', 'correctionRequests')
+                $attendance = Attendance::with('workBreaks', 'correctionRequests')
                 ->where('user_id', $user->id)
                 ->where('work_date', $date)
                 ->first();
@@ -143,13 +143,19 @@ class AttendanceController extends Controller
                 ? $attendance->correctionRequests()->latest()->first()
                 : null;
 
-                $correctionBreaks = $correction
-                ? $correction->correctionWorkBreaks
-                : $attendance->workbreaks;
-
                 $pending = $correction && $correction->status === 'pending';
 
-                return view('admin.attendance.show', compact('attendance', 'date', 'user', 'correction', 'correctionBreaks', 'pending'));
+                $approved =
+                $correction &&
+                $correction->status === 'approved';
+
+                $correctionBreaks = $pending
+                ? $correction->correctionWorkBreaks
+                : ($attendance
+                ? $attendance->workBreaks
+                : collect());
+
+                return view('admin.attendance.show', compact('attendance', 'date', 'user', 'correction', 'pending', 'approved',  'correctionBreaks'));
         }
 
 

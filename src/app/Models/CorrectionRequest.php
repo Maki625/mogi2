@@ -36,7 +36,7 @@ class CorrectionRequest extends Model
         return $this->belongsTo(Attendance::class);
     }
 
-    public function correctionWorkbreaks()
+    public function correctionWorkBreaks()
     {
         return $this->hasMany(CorrectionWorkBreak::class);
     }
