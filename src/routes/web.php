@@ -76,3 +76,8 @@ Route::get('/admin/attendance/{user_id}/{date}', [AdminAttendanceController::cla
 
 //管理者申請一覧ページ
 Route::get('/stamp_correction_request/list', [AdminCorrectionRequestController::class, 'index']);
+
+Route::post(
+    '/admin/correction/{id}/approve',
+    [AdminCorrectionRequestController::class, 'approve']
+);
