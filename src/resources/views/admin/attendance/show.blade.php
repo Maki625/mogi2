@@ -109,7 +109,6 @@
 </form>
 @endif
 
-
 @if($pending)
 <form method="POST" action="/admin/correction/{{ $correction->id }}/approve">
     @csrf

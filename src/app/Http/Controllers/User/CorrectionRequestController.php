@@ -30,7 +30,7 @@ class CorrectionRequestController extends Controller
         ->orderBy('created_at', 'desc')
         ->get();
 
-        return view('user.correction_request.request', compact('requests', 'tab'));
+        return view('user.correction_request.index', compact('requests', 'tab'));
     }
 
     public function store(StoreCorrectionRequest $request, $id) {

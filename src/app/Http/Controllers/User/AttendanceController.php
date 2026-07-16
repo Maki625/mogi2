@@ -32,7 +32,7 @@ class AttendanceController extends Controller
             $status = '勤務外';
         }
 
-        return view('user.attendance.index', compact('todayAttendance', 'isWorking', 'onBreak', 'status'));
+        return view('user.attendance.create', compact('todayAttendance', 'isWorking', 'onBreak', 'status'));
 
     }
 
@@ -175,6 +175,6 @@ class AttendanceController extends Controller
 }
         }
 
-    return view('user.attendance.list', compact('attendances', 'attendanceMap', 'dates', 'month'));
+    return view('user.attendance.index', compact('attendances', 'attendanceMap', 'dates', 'month'));
     }
 }

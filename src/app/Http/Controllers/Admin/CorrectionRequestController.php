@@ -32,7 +32,7 @@ class CorrectionRequestController extends Controller
     ->get();
 
     return view(
-        'admin.attendance.request',
+        'admin.request.index',
         compact('requests', 'tab')
     );
     }
@@ -46,19 +46,17 @@ class CorrectionRequestController extends Controller
 
         $attendance = $correction->attendance;
 
-        // 出勤・退勤を反映
         $attendance->update([
             'clock_in' => $correction->clock_in,
             'clock_out' => $correction->clock_out,
+            'reason' => $correction->reason,
         ]);
 
-        // 元の休憩を削除
         WorkBreak::where(
             'attendance_id',
             $attendance->id
             )->delete();
 
-        // 修正申請された休憩を登録
         foreach($correction->correctionWorkBreaks as $break){
 
             WorkBreak::create([
@@ -68,7 +66,6 @@ class CorrectionRequestController extends Controller
             ]);
         }
 
-        // ステータス変更
         $correction->update([
             'status' => 'approved',
         ]);

@@ -1,52 +1,49 @@
 @extends('layouts.app')
 
-@section('head')
-    <meta http-equiv="refresh" content="60">
-@endsection
-
 @section('content')
 
 <main>
-
 <link href="{{ asset('css/user/index.css') }}" rel="stylesheet">
 
-    <!-- 勤務状態 -->
-    <h2 class="status">
-        {{ $status }}
-    </h2>
+<h2>勤怠一覧</h2>
 
-    <!-- 日付 -->
-    <h3>{{ now()->isoformat('Y年M月D日 (ddd)') }}</h3>
+<a href="{{ url()->current() }}?month={{ $month->copy()->subMonth()->format('Y-m') }}">
+    前月
+</a>
 
-    <!-- 時間 -->
-    <h1>{{ now()->format('H:i') }}</h1>
+<h2>{{ $month->format('Y/m') }}</h2>
 
-    <!-- ボタン -->
-        @if(!$todayAttendance || $status === '勤務外')
-            <form method="POST" action="/attendance/start">
-                @csrf
-                <button type="submit" class="btn">出勤</button>
-            </form>
-        @elseif($status === '出勤中')
-            <form method="POST" action="/attendance/break/start">
-                @csrf
-                <button type="submit" class="btn">休憩入</button>
-            </form>
-            <form method="POST" action="/attendance/end">
-                @csrf
-                <button type="submit" class="btn">退勤</button>
-            </form>
+<a href="{{ url()->current() }}?month={{ $month->copy()->addMonth()->format('Y-m') }}">
+    次月
+</a>
 
-        @elseif($status === '休憩中')
-            <form method="POST" action="/attendance/break/end">
-                @csrf
-                <button type="submit" class="btn">休憩戻</button>
-            </form>
-        @elseif($status === '退勤済')
-            <h3 class="finished">お疲れ様でした。</h3>
-        @endif
-    </div>
-</div>
-@endsection
+<table border="1" cellspacing="0" cellpadding="8">
+    <tr>
+        <th class="date">日付</th>
+        <th class="clock_in">出勤</th>
+        <th class="clock_out">退勤</th>
+        <th class="break_time">休憩</th>
+        <th class="work_total">合計</th>
+        <th class="content">詳細</th>
+    </tr>
+    @foreach ($dates as $date)
 
+    @php
+        $attendance = $attendanceMap[$date->format('Y-m-d')] ?? null;
+    @endphp
+
+        <tr>
+            <td>{{ $date->isoformat('MM/DD(ddd)') }}</td>
+            <td>{{ $attendance?->clock_in?->format('H:i') }}</td>
+            <td>{{ $attendance?->clock_out?->format('H:i') }}</td>
+            <td>{{ $attendance?->show_break_time }}</td>
+            <td>{{ $attendance?->show_work_time }}</td>
+        <td>
+            <a href="/attendance/detail/{{ $date->format('Y-m-d') }}" class="content">詳細</a>
+        </td>
+    </tr>
+    @endforeach
+</table>
 </main>
+
+@endsection

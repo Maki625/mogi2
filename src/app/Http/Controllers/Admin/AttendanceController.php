@@ -97,28 +97,46 @@ class AttendanceController extends Controller
 
                 $totalMinutes = 0;
 
-                foreach ($attendance->workBreaks as $break) {
+        foreach ($attendance->workBreaks as $break) {
 
-                if ($break->break_start && $break->break_end) {
+        if ($break->break_start && $break->break_end) {
 
-                        $start = Carbon::parse($break->break_start);
-                        $end = Carbon::parse($break->break_end);
+                $start = Carbon::parse($break->break_start);
+                $end = Carbon::parse($break->break_end);
 
-                        $totalMinutes += $start->diffInMinutes($end);
-                }
-                }
-
-                $attendance->show_break_time =
-                $totalMinutes > 0
-                ? sprintf(
-                        '%02d : %02d',
-                        intdiv($totalMinutes, 60),
-                        $totalMinutes % 60
-                )
-                : null;
+                $totalMinutes += $start->diffInMinutes($end);
+        }
         }
 
-        return view('admin.attendance.user_list.show', compact(
+        $attendance->show_break_time =
+        $totalMinutes > 0
+        ? sprintf(
+                '%02d : %02d',
+                intdiv($totalMinutes, 60),
+                $totalMinutes % 60
+        )
+        : null;
+
+        if ($attendance->clock_in && $attendance->clock_out) {
+
+        $workMinutes =
+        $attendance->clock_in->diffInMinutes($attendance->clock_out)
+        - $totalMinutes;
+
+        $attendance->show_work_time = sprintf(
+        '%02d:%02d',
+        intdiv($workMinutes, 60),
+        $workMinutes % 60
+        );
+
+        } else {
+
+        $attendance->show_work_time = null;
+
+                }
+        }
+
+        return view('admin.staff.index', compact(
                 'attendances',
                 'attendanceMap',
                 'dates',
@@ -155,7 +173,7 @@ class AttendanceController extends Controller
                 ? $attendance->workBreaks
                 : collect());
 
-                return view('admin.attendance.show', compact('attendance', 'date', 'user', 'correction', 'pending', 'approved',  'correctionBreaks'));
+                return view('admin.staff.attendance.index', compact('attendance', 'date', 'user', 'correction', 'pending', 'approved',  'correctionBreaks'));
         }
 
 
