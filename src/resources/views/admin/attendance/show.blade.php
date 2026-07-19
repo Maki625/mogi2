@@ -15,7 +15,7 @@
     $break2 = $correctionBreaks[1] ?? null;
 @endphp
 
-@if(!$pending && !$approved)
+@if(!$pending)
 <form method="POST" action="/admin/attendance/fix/{{ $attendance->id }}">
     @csrf
 @endif
@@ -35,53 +35,55 @@
     <tr>
         <th class="label">出勤・退勤</th>
         <td class="value">
-            <input type="time"
+            <input
+                type="time"
                 name="clock_in"
                 value="{{ old('clock_in', $correction?->clock_in?->format('H:i') ?? optional($attendance->clock_in)->format('H:i')) }}"
-                @if($pending || $approved) disabled @endif>
+                @if($pending) disabled @endif>
 
-            <input type="time"
+            <input
+                type="time"
                 name="clock_out"
                 value="{{ old('clock_out', $correction?->clock_out?->format('H:i') ?? optional($attendance->clock_out)->format('H:i')) }}"
-                @if($pending || $approved) disabled @endif>
+                @if($pending) disabled @endif>
         </td>
     </tr>
 
     <tr>
         <th class="label">休憩</th>
         <td class="value">
-
-            <input type="time"
+            <input
+                type="time"
                 name="break1_start"
                 value="{{ old('break1_start', $break1?->break_start?->format('H:i')) }}"
-                @if($pending || $approved) disabled @endif>
+                @if($pending) disabled @endif>
 
             <span>〜</span>
 
-            <input type="time"
+            <input
+                type="time"
                 name="break1_end"
                 value="{{ old('break1_end', $break1?->break_end?->format('H:i')) }}"
-                @if($pending || $approved) disabled @endif>
-
+                @if($pending) disabled @endif>
         </td>
     </tr>
 
     <tr>
         <th class="label">休憩2</th>
         <td class="value">
-
-            <input type="time"
+            <input
+                type="time"
                 name="break2_start"
                 value="{{ old('break2_start', $break2?->break_start?->format('H:i')) }}"
-                @if($pending || $approved) disabled @endif>
+                @if($pending) disabled @endif>
 
             <span>〜</span>
 
-            <input type="time"
+            <input
+                type="time"
                 name="break2_end"
                 value="{{ old('break2_end', $break2?->break_end?->format('H:i')) }}"
-                @if($pending || $approved) disabled @endif>
-
+                @if($pending) disabled @endif>
         </td>
     </tr>
 
@@ -91,39 +93,29 @@
             <textarea
                 class="text-area"
                 name="reason"
-                @if($pending || $approved) disabled @endif>{{ old(
+                @if($pending) disabled @endif>{{ old(
                     'reason',
                     $pending
-                    ? $correction?->reason
-                    : $attendance?->reason
+                        ? $correction?->reason
+                        : $attendance?->reason
                 ) }}</textarea>
         </td>
     </tr>
 
 </table>
 
-@if(!$pending && !$approved)
+@if($pending)
+    <p class="pending-message">
+        修正申請が提出されています。<br>
+        申請一覧から内容を確認してください。
+    </p>
+@endif
+
+@if(!$pending)
     <button type="submit">
         修正する
     </button>
 </form>
-@endif
-
-@if($pending)
-<form method="POST" action="/admin/correction/{{ $correction->id }}/approve">
-    @csrf
-
-    <button type="submit">
-        承認する
-    </button>
-</form>
-@endif
-
-
-@if($approved)
-<p class="approved_btn">
-    承認済み
-</p>
 @endif
 
 @endsection

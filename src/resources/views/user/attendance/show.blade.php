@@ -84,7 +84,7 @@
 </table>
     @if ($pending)
         <p class="text-danger">
-            承認待ちのため修正はできません。
+            ※承認待ちのため修正はできません。
         </p>
     @else
     <button type="submit" name="send" class="send-btn" value="fix">

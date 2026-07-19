@@ -2,23 +2,14 @@
 
 @section('content')
 
-<link href="{{ asset('css/admin/show.css') }}" rel="stylesheet">
+<link href="{{ asset('css/admin/request/show.css') }}" rel="stylesheet">
 
-<h1>勤怠詳細</h1>
-
-@foreach (collect($errors->all())->unique() as $error)
-    <li>{{ $error }}</li>
-@endforeach
+<h1>修正申請詳細</h1>
 
 @php
     $break1 = $correctionBreaks[0] ?? null;
     $break2 = $correctionBreaks[1] ?? null;
 @endphp
-
-@if(!$pending && !$approved)
-<form method="POST" action="/admin/attendance/fix/{{ $attendance->id }}">
-    @csrf
-@endif
 
 <table class="detail-table">
 
@@ -36,52 +27,42 @@
         <th class="label">出勤・退勤</th>
         <td class="value">
             <input type="time"
-                name="clock_in"
-                value="{{ old('clock_in', $correction?->clock_in?->format('H:i') ?? optional($attendance->clock_in)->format('H:i')) }}"
-                @if($pending || $approved) disabled @endif>
+                value="{{ $correction?->clock_in?->format('H:i') }}"
+                disabled>
 
             <input type="time"
-                name="clock_out"
-                value="{{ old('clock_out', $correction?->clock_out?->format('H:i') ?? optional($attendance->clock_out)->format('H:i')) }}"
-                @if($pending || $approved) disabled @endif>
+                value="{{ $correction?->clock_out?->format('H:i') }}"
+                disabled>
         </td>
     </tr>
 
     <tr>
         <th class="label">休憩</th>
         <td class="value">
-
             <input type="time"
-                name="break1_start"
-                value="{{ old('break1_start', $break1?->break_start?->format('H:i')) }}"
-                @if($pending || $approved) disabled @endif>
+                value="{{ $break1?->break_start?->format('H:i') }}"
+                disabled>
 
             <span>〜</span>
 
             <input type="time"
-                name="break1_end"
-                value="{{ old('break1_end', $break1?->break_end?->format('H:i')) }}"
-                @if($pending || $approved) disabled @endif>
-
+                value="{{ $break1?->break_end?->format('H:i') }}"
+                disabled>
         </td>
     </tr>
 
     <tr>
         <th class="label">休憩2</th>
         <td class="value">
-
             <input type="time"
-                name="break2_start"
-                value="{{ old('break2_start', $break2?->break_start?->format('H:i')) }}"
-                @if($pending || $approved) disabled @endif>
+                value="{{ $break2?->break_start?->format('H:i') }}"
+                disabled>
 
             <span>〜</span>
 
             <input type="time"
-                name="break2_end"
-                value="{{ old('break2_end', $break2?->break_end?->format('H:i')) }}"
-                @if($pending || $approved) disabled @endif>
-
+                value="{{ $break2?->break_end?->format('H:i') }}"
+                disabled>
         </td>
     </tr>
 
@@ -90,24 +71,11 @@
         <td class="value">
             <textarea
                 class="text-area"
-                name="reason"
-                @if($pending || $approved) disabled @endif>{{ old(
-                    'reason',
-                    $pending
-                    ? $correction?->reason
-                    : $attendance?->reason
-                ) }}</textarea>
+                disabled>{{ $correction?->reason }}</textarea>
         </td>
     </tr>
 
 </table>
-
-@if(!$pending && !$approved)
-    <button type="submit">
-        修正する
-    </button>
-</form>
-@endif
 
 @if($pending)
 <form method="POST" action="/admin/correction/{{ $correction->id }}/approve">
@@ -118,7 +86,6 @@
     </button>
 </form>
 @endif
-
 
 @if($approved)
 <p class="approved_btn">

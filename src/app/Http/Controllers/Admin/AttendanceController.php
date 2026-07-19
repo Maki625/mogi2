@@ -136,7 +136,7 @@ class AttendanceController extends Controller
                 }
         }
 
-        return view('admin.staff.index', compact(
+        return view('admin.staff.attendance.index', compact(
                 'attendances',
                 'attendanceMap',
                 'dates',
@@ -173,7 +173,7 @@ class AttendanceController extends Controller
                 ? $attendance->workBreaks
                 : collect());
 
-                return view('admin.staff.attendance.index', compact('attendance', 'date', 'user', 'correction', 'pending', 'approved',  'correctionBreaks'));
+                return view('admin.attendance.show', compact('attendance', 'date', 'user', 'correction', 'pending', 'approved',  'correctionBreaks'));
         }
 
 

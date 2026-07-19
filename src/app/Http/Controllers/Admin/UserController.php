@@ -13,7 +13,7 @@ class UserController extends Controller
 
     $users = User::where('admin_status', false)->get();
 
-    return view('admin.attendance.user_list.user', compact('users'));
+    return view('admin.staff.index', compact('users'));
 
     }
 }
