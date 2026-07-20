@@ -8,6 +8,8 @@ use App\Models\Attendance;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreCorrectionRequest;
+
 
 class AttendanceController extends Controller
 {
@@ -176,5 +178,39 @@ class AttendanceController extends Controller
                 return view('admin.attendance.show', compact('attendance', 'date', 'user', 'correction', 'pending', 'approved',  'correctionBreaks'));
         }
 
+        public function update(StoreCorrectionRequest $request, $id)
+        {
+        $attendance = Attendance::findOrFail($id);
+
+        // 勤怠更新
+        $attendance->update([
+                'clock_in' => $request->clock_in,
+                'clock_out' => $request->clock_out,
+                'reason' => $request->reason,
+        ]);
+
+        // 休憩更新
+        $attendance->workBreaks()->delete();
+
+        if ($request->break1_start && $request->break1_end) {
+
+                $attendance->workBreaks()->create([
+                'break_start' => $request->break1_start,
+                'break_end' => $request->break1_end,
+                ]);
+        }
+
+        if ($request->break2_start && $request->break2_end) {
+
+                $attendance->workBreaks()->create([
+                'break_start' => $request->break2_start,
+                'break_end' => $request->break2_end,
+                ]);
+        }
+
+        return redirect()
+                ->back()
+                ->with('message', '修正しました。');
+        }
 
 }

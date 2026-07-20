@@ -6,9 +6,13 @@
 
 <h1>勤怠詳細</h1>
 
-@foreach (collect($errors->all())->unique() as $error)
-    <li>{{ $error }}</li>
-@endforeach
+@if($errors->any())
+<ul class="error-list">
+    @foreach($errors->all() as $error)
+        <li>{{ $error }}</li>
+    @endforeach
+</ul>
+@endif
 
 @php
     $break1 = $correctionBreaks[0] ?? null;
@@ -18,6 +22,7 @@
 @if(!$pending)
 <form method="POST" action="/admin/attendance/fix/{{ $attendance->id }}">
     @csrf
+    @method('PUT')
 @endif
 
 <table class="detail-table">
@@ -116,6 +121,12 @@
     修正する
     </button>
 </form>
+@endif
+
+@if(session('success'))
+    <p class="success-message">
+        {{ session('success') }}
+    </p>
 @endif
 
 @endsection

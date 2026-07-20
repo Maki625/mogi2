@@ -1,3 +1,10 @@
 .nav-link1 {
     color: #000;
 }
+
+.success-message {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+}

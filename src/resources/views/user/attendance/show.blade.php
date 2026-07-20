@@ -6,9 +6,13 @@
 
 <h1>勤怠詳細</h1>
 
-@foreach (collect($errors->all())->unique() as $error)
-    <li>{{ $error }}</li>
-@endforeach
+@if($errors->any())
+<ul class="error-list">
+    @foreach($errors->all() as $error)
+        <li>{{ $error }}</li>
+    @endforeach
+</ul>
+@endif
 
 <table class="detail-table">
 

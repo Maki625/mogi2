@@ -57,7 +57,7 @@ public function withValidator($validator)
         $in = \Carbon\Carbon::parse(request('clock_in'));
         $out = \Carbon\Carbon::parse(request('clock_out'));
 
-        // ② 休憩1
+        //休憩1
         $b1s = request('break1_start') ? Carbon::parse(request('break1_start')) : null;
         $b1e = request('break1_end') ? Carbon::parse(request('break1_end')) : null;
 
@@ -75,7 +75,7 @@ public function withValidator($validator)
             );
         }
 
-        // ③ 休憩2
+        //休憩2
         $b2s = request('break2_start') ? Carbon::parse(request('break2_start')) : null;
         $b2e = request('break2_end') ? Carbon::parse(request('break2_end')) : null;
 
