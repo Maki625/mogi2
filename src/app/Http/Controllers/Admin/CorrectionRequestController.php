@@ -37,6 +37,34 @@ class CorrectionRequestController extends Controller
     );
     }
 
+    public function show($attendance_correct_request_id)
+{
+    $correction = CorrectionRequest::with([
+        'user',
+        'attendance',
+        'correctionWorkBreaks'
+    ])->findOrFail($attendance_correct_request_id);
+
+    $user = $correction->user;
+    $attendance = $correction->attendance;
+    $date = $attendance->work_date;
+
+    $pending = $correction->status === 'pending';
+    $approved = $correction->status === 'approved';
+
+    $correctionBreaks = $correction->correctionWorkBreaks;
+
+    return view('admin.request.show', compact(
+        'correction',
+        'attendance',
+        'user',
+        'date',
+        'pending',
+        'approved',
+        'correctionBreaks'
+    ));
+}
+
     public function approve($id)
     {
         $correction = CorrectionRequest::with(

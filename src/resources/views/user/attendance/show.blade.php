@@ -77,7 +77,12 @@
         <th class="label">備考</th>
         <td class="value">
             <textarea class="text-area" name="reason" @if($pending) disabled @endif>
-                {{ $correction?->reason ?? old('reason') }}</textarea>
+                {{ old(
+        'reason',
+        $pending
+            ? $correction?->reason
+            : $attendance?->reason
+    ) }}</textarea>
         </td>
     </tr>
 

@@ -30,9 +30,9 @@
         <nav class="header_nav">
             @auth
             @if (auth()->user()->admin_status)
-            <a href="/admin/attendance/list">勤怠一覧</a>
-            <a href="/admin/staff/list">スタッフ一覧</a>
-            <a href="/stamp_correction_request/list">申請一覧</a>
+            <a href="/admin/attendance/list" class="nav-link">勤怠一覧</a>
+            <a href="/admin/staff/list" class="nav-link">スタッフ一覧</a>
+            <a href="/admin/stamp_correction_request/list" class="nav-link">申請一覧</a>
             <form action="/logout" method="POST">
                 @csrf
                 <input type="hidden" name="logout_type" value="admin">

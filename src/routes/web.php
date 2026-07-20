@@ -61,6 +61,8 @@ Route::post('/attendance/fix/{id}', [UserCorrectionRequestController::class, 'st
 //申請一覧ページ
 Route::get('/stamp_correction_request/list', [UserCorrectionRequestController::class, 'index']);
 
+
+
 //管理者ホーム
 Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index'])
     ->name('admin.attendance.index');
@@ -74,10 +76,15 @@ Route::get('/admin/attendance/list/{id}', [AdminAttendanceController::class, 'li
 //スタッフ別勤怠詳細ページ
 Route::get('/admin/attendance/{user_id}/{date}', [AdminAttendanceController::class, 'show']);
 
-//管理者申請一覧ページ
-Route::get('/stamp_correction_request/list', [AdminCorrectionRequestController::class, 'index']);
+//スタッフ別勤怠詳細修正処理
+Route::put('/admin/attendance/fix/{id}', [AdminAttendanceController::class, 'update']);
 
-Route::post(
-    '/admin/correction/{id}/approve',
-    [AdminCorrectionRequestController::class, 'approve']
+//管理者申請一覧ページ
+Route::get('/admin/stamp_correction_request/list', [AdminCorrectionRequestController::class, 'index']);
+
+//申請詳細ページ
+Route::get('/stamp_correction_request/approve/{attendance_correct_request_id}', [AdminCorrectionRequestController::class, 'show']);
+
+//修正承認処理
+Route::post('/admin/correction/{id}/approve', [AdminCorrectionRequestController::class, 'approve']
 );

@@ -2,7 +2,7 @@
 
 @section('content')
 
-<link href="{{ asset('css/admin/show.css') }}" rel="stylesheet">
+<link href="{{ asset('css/admin/attendance/show.css') }}" rel="stylesheet">
 
 <h1>勤怠詳細</h1>
 
@@ -107,13 +107,13 @@
 @if($pending)
     <p class="pending-message">
         修正申請が提出されています。<br>
-        申請一覧から内容を確認してください。
+    <a href="/admin/stamp_correction_request/list" class="nav-link1">申請一覧</a>から内容を確認してください。
     </p>
 @endif
 
 @if(!$pending)
-    <button type="submit">
-        修正する
+    <button type="submit" name="send" class="send-btn" value="fix">
+    修正する
     </button>
 </form>
 @endif

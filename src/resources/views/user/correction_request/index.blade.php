@@ -8,9 +8,9 @@
 <h2>申請一覧</h2>
     <div class="section-header">
         <a href="{{ request()->fullUrlWithQuery(['tab' => 'pending']) }}"
-       class="section-link {{ $tab === 'pending' ? 'active' : '' }}">承認待ち</a>
+        class="section-link {{ $tab === 'pending' ? 'active' : '' }}">承認待ち</a>
         <a href="{{ request()->fullUrlWithQuery(['tab' => 'approved']) }}"
-       class="section-link {{ $tab === 'approved' ? 'active' : '' }}">承認済み</a>
+        class="section-link {{ $tab === 'approved' ? 'active' : '' }}">承認済み</a>
     </div>
     <hr class="divider">
 
@@ -37,7 +37,7 @@
         <td>{{ $request->reason }}</td>
         <td>{{ $request->created_at->format('Y/m/d') }}</td>
         <td>
-        <a href="/attendance/detail/{{ $request->attendance->work_date->format('Y-m-d') }}" class="content">詳細</a>
+        <a href="/attendance/detail/{{ $request->attendance->work_date->format('Y-m-d') }}">詳細</a>
         </td>
     </tr>
     @endforeach

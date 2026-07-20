@@ -37,7 +37,7 @@
         <td>{{ $request->reason }}</td>
         <td>{{ $request->created_at->format('Y/m/d') }}</td>
         <td>
-        <a href="/admin/attendance/{{ $request->user_id }}/{{ $request->attendance->work_date->format('Y-m-d') }}" class="content">詳細</a>
+        <a href="/stamp_correction_request/approve/{{ $request->id }}" class="content">詳細</a>
         </td>
     </tr>
     @endforeach
