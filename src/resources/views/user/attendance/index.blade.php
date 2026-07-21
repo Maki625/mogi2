@@ -5,7 +5,8 @@
 <main>
 <link href="{{ asset('css/user/index.css') }}" rel="stylesheet">
 
-<h2>勤怠一覧</h2>
+<div class="container">
+<h2 class="title">勤怠一覧</h2>
 
 <a href="{{ url()->current() }}?month={{ $month->copy()->subMonth()->format('Y-m') }}">
     前月
@@ -44,6 +45,7 @@
     </tr>
     @endforeach
 </table>
+</div>
 </main>
 
 @endsection

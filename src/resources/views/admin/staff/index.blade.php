@@ -2,7 +2,7 @@
 
 @section('content')
 
-<link href="{{ asset('css/admin/index.css') }}" rel="stylesheet">
+<link href="{{ asset('css/admin/staff/index.css') }}" rel="stylesheet">
 
 <h1>スタッフ一覧</h1>
 

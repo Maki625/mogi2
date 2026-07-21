@@ -3,7 +3,7 @@
 @section('content')
 
 <main>
-<link href="{{ asset('css/user/list.css') }}" rel="stylesheet">
+<link href="{{ asset('css/admin/attendance.css') }}" rel="stylesheet">
 
 <h2>{{ $user->name }}さんの勤怠一覧</h2>
 

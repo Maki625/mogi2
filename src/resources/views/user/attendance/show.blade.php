@@ -4,7 +4,8 @@
 
 <link href="{{ asset('css/user/show.css') }}" rel="stylesheet">
 
-<h1>勤怠詳細</h1>
+<div class="container">
+<h1 class="title">勤怠詳細</h1>
 
 @if($errors->any())
 <ul class="error-list">
@@ -99,7 +100,7 @@
     <button type="submit" name="send" class="send-btn" value="fix">
         修正する</button>
     @endif
-
+</div>
     </form>
 
 @endsection

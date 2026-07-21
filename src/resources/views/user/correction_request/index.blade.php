@@ -3,9 +3,10 @@
 @section('content')
 
 <main>
-<link href="{{ asset('css/user/index.css') }}" rel="stylesheet">
+<link href="{{ asset('css/user/request.css') }}" rel="stylesheet">
 
-<h2>申請一覧</h2>
+<div class="container">
+<h2 class="title">申請一覧</h2>
     <div class="section-header">
         <a href="{{ request()->fullUrlWithQuery(['tab' => 'pending']) }}"
         class="section-link {{ $tab === 'pending' ? 'active' : '' }}">承認待ち</a>
@@ -42,6 +43,7 @@
     </tr>
     @endforeach
 </table>
+</div>
 </main>
 
 @endsection

@@ -3,8 +3,9 @@
 @section('content')
 
 <main>
-<link href="{{ asset('css/admin/index.css') }}" rel="stylesheet">
+<link href="{{ asset('css/admin/attendance/index.css') }}" rel="stylesheet">
 
+<div class="container">
 <h3>{{ $date->format('Y年m月d日の勤怠') }}</h3>
 
 <a href="/admin/attendance/list?date={{ $date->copy()->subDay()->format('Y-m-d') }}">
@@ -40,6 +41,7 @@
         </tr>
     @endforeach
 </table>
+</div>
 </main>
 
 @endsection

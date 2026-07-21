@@ -3,7 +3,7 @@
 @section('content')
 
 <main>
-<link href="{{ asset('css/admin/request.css') }}" rel="stylesheet">
+<link href="{{ asset('css/admin/request/index.css') }}" rel="stylesheet">
 
 <h2>申請一覧</h2>
     <div class="section-header">

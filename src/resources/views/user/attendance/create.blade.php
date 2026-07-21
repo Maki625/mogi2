@@ -10,6 +10,7 @@
 
 <link href="{{ asset('css/user/create.css') }}" rel="stylesheet">
 
+<div class="container">
     <!-- 勤務状態 -->
     <h2 class="status">
         {{ $status }}
@@ -48,5 +49,5 @@
     </div>
 </div>
 @endsection
-
+</div>
 </main>
