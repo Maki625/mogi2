@@ -62,11 +62,19 @@ th,
 td {
     border: none;
     border-bottom: 1px solid #ddd;
+    padding-left: 45px;
+    padding-right: 25px;
+    font-weight: bold;
+
 }
 
 /* 最後の行だけ線を消す */
 tr:last-child td {
     border-bottom: none;
+}
+
+.content {
+    padding-right: 40px;
 }
 
 /* 詳細リンク */

@@ -7,15 +7,18 @@
 <div class="container">
 <h1 class="title">勤怠詳細</h1>
 
-@if($errors->any())
-<ul class="error-list">
-    @foreach($errors->all() as $error)
-        <li>{{ $error }}</li>
-    @endforeach
-</ul>
-@endif
+    @if($errors->any())
+    <ul class="error-list">
+        @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+    @endif
 
-<table class="detail-table">
+        <form class="form" method="POST" action="/attendance/fix/{{ $attendance->id }}">
+        @csrf
+
+    <table class="detail-table">
 
     <tr>
         <th class="label">名前</th>
@@ -24,10 +27,10 @@
 
     <tr>
         <th class="label">日付</th>
-        <td class="value">{{ $date->format('Y年n月j日') }}</td>
+        <td class="value">
+            <span class="date-year">{{ $date->format('Y年') }}</span>
+            <span class="date-month">{{ $date->format('n月j日') }}</span></td>
     </tr>
-    <form class="form" method="POST" action="/attendance/fix/{{ $attendance->id }}">
-    @csrf
 
     <tr>
         <th class="label">出勤・退勤</th>
@@ -35,11 +38,16 @@
             <input type="time"
             name="clock_in"
             value="{{ old('clock_in', $correction?->clock_in->format('H:i') ?? optional($attendance->clock_in)->format('H:i')) }}"
+            class="@if($pending) pending-input @endif"
             @if($pending) disabled @endif>
+
+            <span class="time-line">〜</span>
 
             <input type="time"
             name="clock_out"
             value="{{ old('clock_out', $correction?->clock_out->format('H:i') ?? optional($attendance->clock_out)->format('H:i')) }}"
+            class="@if($pending) pending-input-out @endif"
+
             @if($pending) disabled @endif>
         </td>
     </tr>
@@ -53,12 +61,16 @@
         <td class="value">
             <input type="time" name="break1_start"
             value="{{ old('break1_start', $break1?->break_start?->format('H:i')) }}"
+            class="@if($pending) pending-input @endif"
+
             @if($pending) disabled @endif>
 
-            <span>〜</span>
+            <span class="time-line">〜</span>
 
             <input type="time" name="break1_end"
             value="{{ old('break1_end', $break1?->break_end?->format('H:i')) }}"
+            class="@if($pending) pending-input-out @endif"
+
             @if($pending) disabled @endif>
         </td>
     </tr>
@@ -68,12 +80,16 @@
     <td class="value">
         <input type="time" name="break2_start"
         value="{{ old('break2_start', $break2?->break_start?->format('H:i')) }}"
+        class="@if($pending) pending-input @endif"
+
         @if($pending) disabled @endif>
 
-        <span>〜</span>
+        <span class="time-line">〜</span>
 
         <input type="time" name="break2_end"
         value="{{ old('break2_end', $break2?->break_end?->format('H:i')) }}"
+        class="@if($pending) pending-input-out @endif"
+
         @if($pending) disabled @endif>
     </td>
     </tr>
@@ -81,10 +97,11 @@
     <tr>
         <th class="label">備考</th>
         <td class="value">
-            <textarea class="text-area" name="reason" @if($pending) disabled @endif>
-                {{ old(
-        'reason',
-        $pending
+            <textarea name="reason" class="text-area @if($pending) pending-input @endif"
+            @if($pending) disabled @endif
+            >{{ old(
+            'reason',
+            $pending
             ? $correction?->reason
             : $attendance?->reason
     ) }}</textarea>
