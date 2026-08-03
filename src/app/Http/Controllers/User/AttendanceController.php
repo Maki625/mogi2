@@ -23,7 +23,7 @@ class AttendanceController extends Controller
         if (!$todayAttendance) {
             $status = '勤務外';
         } elseif ($todayAttendance->clock_out) {
-            $status = '退勤済み';
+            $status = '退勤済';
         } elseif ($onBreak) {
             $status = '休憩中';
         } elseif ($isWorking) {

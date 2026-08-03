@@ -1,6 +1,78 @@
+/* 全体 */
 .container {
-    max-width: 500px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    box-sizing: border-box;
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    margin: 80px auto 0;
+}
+
+/* 勤務状態 */
+.status {
+    display: inline-block;
+    margin: 0 0 30px;
+    padding: 4px 10px;
+    border: 1px solid gainsboro;
+    background-color: gainsboro;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+/* 日付 */
+.date {
+    margin: 0 0 15px;
+    font-size: 24px;
+    font-weight: normal;
+}
+
+/* 時間 */
+.time {
+    margin: 0 0 30px;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+/* ボタン */
+.container form {
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.btn {
+    width: 40%;
+    padding: 10px 0;
+    border: none;
+    background-color: #000;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.button-group {
+    display: flex;
+    gap: 0px;
+    width: 100%
+}
+
+.button-group .btn {
+    width: 80%;
+}
+
+.button-group form {
+    flex: 1;
+}
+
+.break-btn {
+    background-color: #fff;
+    color: #000;
+    border: none;
+}
+
+/* 退勤済み */
+.finished {
+    margin-top: 35px;
+    padding-left: 20px;
+    font-size: 20px;
 }
