@@ -15,7 +15,7 @@
     </div>
     <hr class="divider">
 
-    <table border="1" cellspacing="0" cellpadding="8">
+    <table>
 
     <tr>
         <th class="status">状態</th>
@@ -28,7 +28,7 @@
 
     @foreach($requests as $request)
     <tr>
-        <td>@if($request->status === 'pending')
+        <td class="status">@if($request->status === 'pending')
         承認待ち
         @elseif($request->status === 'approved')
         承認済み
@@ -38,7 +38,7 @@
         <td>{{ $request->reason }}</td>
         <td>{{ $request->created_at->format('Y/m/d') }}</td>
         <td>
-        <a href="/attendance/detail/{{ $request->attendance->work_date->format('Y-m-d') }}">詳細</a>
+        <a href="/attendance/detail/{{ $request->attendance->work_date->format('Y-m-d') }}" class="content-nav">詳細</a>
         </td>
     </tr>
     @endforeach
