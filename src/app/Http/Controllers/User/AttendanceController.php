@@ -108,7 +108,7 @@ class AttendanceController extends Controller
 
         $correctionBreaks = $correction
         ? $correction->correctionWorkBreaks
-        : $attendance->workbreaks;
+        : ($attendance ? $attendance->workbreaks : collect());
 
         $pending = $correction && $correction->status === 'pending';
 

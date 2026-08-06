@@ -34,9 +34,24 @@ class CorrectionRequestController extends Controller
     }
 
     public function store(StoreCorrectionRequest $request, $id) {
-        $attendance = Attendance::where('user_id', Auth::id())
-        ->where('id', $id)
-        ->firstOrFail();
+
+        $user = Auth::user();
+
+        $date = Carbon::perse($id);
+
+        $attendance = Attendance::where('user_id', $user->id)
+        ->where('work_date', $date)
+        ->first();
+
+        if (!$attendance) {
+        $attendance = Attendance::create([
+            'user_id' => $user->id,
+            'work_date' => $date,
+            'clock_in' => null,
+            'clock_out' => null,
+            'reason' => null,
+        ]);
+        }
 
         $baseDate = $attendance->work_date->format('Y-m-d');
 
@@ -75,7 +90,7 @@ class CorrectionRequestController extends Controller
             ]);
         }
 
-        return redirect('/attendance/detail/' . $attendance->work_date);
+        return redirect('/attendance/detail/' . $attendance->work_date->format('Y-m-d'));
     }
 
     }
