@@ -77,7 +77,7 @@ Route::get('/admin/attendance/list/{id}', [AdminAttendanceController::class, 'li
 Route::get('/admin/attendance/{user_id}/{date}', [AdminAttendanceController::class, 'show']);
 
 //スタッフ別勤怠詳細修正処理
-Route::put('/admin/attendance/fix/{id}', [AdminAttendanceController::class, 'update']);
+Route::put('/admin/attendance/fix/{user_id}/{date}', [AdminAttendanceController::class, 'update']);
 
 //管理者申請一覧ページ
 Route::get('/admin/stamp_correction_request/list', [AdminCorrectionRequestController::class, 'index']);

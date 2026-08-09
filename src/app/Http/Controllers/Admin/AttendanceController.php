@@ -68,6 +68,7 @@ class AttendanceController extends Controller
         return view ('admin.attendance.index', compact('date', 'attendances'));
         }
 
+        //リスト
         public function list(Request $request, $id)
         {
         $month = $request->month
@@ -148,6 +149,7 @@ class AttendanceController extends Controller
         ));
         }
 
+        //詳細
         public function show($user_id, $date)
         {
                 $date = Carbon::parse($date);
@@ -178,18 +180,29 @@ class AttendanceController extends Controller
                 return view('admin.attendance.show', compact('attendance', 'date', 'user', 'correction', 'pending', 'approved',  'correctionBreaks'));
         }
 
-        public function update(StoreCorrectionRequest $request, $id)
+        //修正
+        public function update(StoreCorrectionRequest $request, $user_id, $date)
         {
-        $attendance = Attendance::findOrFail($id);
+        $user = User::findOrFail($user_id);
 
-        // 勤怠更新
+        $attendance = Attendance::firstOrCreate(
+        [
+        'user_id' => $user->id,
+        'work_date' => $date,
+        ],
+        [
+        'clock_in' => null,
+        'clock_out' => null,
+        'reason' => null,
+        ]
+        );
+
         $attendance->update([
-                'clock_in' => $request->clock_in,
-                'clock_out' => $request->clock_out,
-                'reason' => $request->reason,
+        'clock_in' => $request->clock_in,
+        'clock_out' => $request->clock_out,
+        'reason' => $request->reason,
         ]);
 
-        // 休憩更新
         $attendance->workBreaks()->delete();
 
         if ($request->break1_start && $request->break1_end) {

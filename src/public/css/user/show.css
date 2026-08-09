@@ -125,6 +125,10 @@ textarea.pending-input {
     color: red;
 }
 
+.error-list {
+    color: red;
+}
+
 /* 修正ボタン */
 .send-btn {
     display: block;

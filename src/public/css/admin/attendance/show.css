@@ -1,17 +1,145 @@
 .container {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 40px 20px;
+    width: 60%;
+    max-width: none;
+    margin: 60px auto;
+}
+
+/* タイトル */
+.title {
+    margin-bottom: 30px;
+    padding-left: 12px;
+    border-left: 4px solid #000;
+    font-size: 28px;
+}
+
+/* 詳細テーブル */
+.detail-table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background-color: #fff;
+    border: none;
+    border-radius: 8px;
+    table-layout: fixed;
+}
+
+/* テーブル共通 */
+.detail-table th,
+.detail-table td {
+    border-bottom: 1px solid #ddd;
+    padding: 20px 40px;
+    font-weight: bold;
+    text-align: left;
+}
+
+/* 項目名 */
+.detail-table th {
+    width: 25%;
+    color: grey;
+}
+
+/* 内容 */
+.detail-table td {
+    width: 75%;
+}
+
+/* 日付 */
+.date-year {
+    display: inline-block;
+    width: 120px;
+    margin-right: 30px;
+}
+
+.date-month {
+    display: inline-block;
+}
+
+/* 時刻入力 */
+.detail-table input[type="time"] {
+    width: 100px;
+    height: 35px;
+    padding: 5px 10px;
     box-sizing: border-box;
 }
 
-.nav-link1 {
+.time-line {
+    display: inline-block;
+    width: 30px;
+    text-align: center;
+}
+
+/* 承認待ちの時刻 */
+input[type="time"].pending-input {
+    width: 80px;
+    height: auto;
+    padding: 0;
+    border: none;
+    background: transparent;
+    outline: none;
+    appearance: none;
     color: #000;
+    font-weight: bold;
+}
+
+input[type="time"].pending-input-out {
+    padding-left: 30px;
+    width: 120px;
+    height: auto;
+    border: none;
+    background: transparent;
+    outline: none;
+    appearance: none;
+    color: #000;
+    font-weight: bold;
+
+}
+
+/* 承認待ちの備考 */
+textarea.pending-input {
+    width: auto;
+    height: auto;
+    min-height: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    resize: none;
+    outline: none;
+    box-shadow: none;
+    color: #000;
+    font: inherit;
+}
+
+/* 通常時の備考 */
+.text-area {
+    width: 80%;
+    min-height: 100px;
+    padding: 30px 10px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    text-align: left;
 }
 
 .success-message {
+    text-align: right;
+    color: orange;
+}
+
+.error-list {
     color: red;
+}
+
+/* 修正ボタン */
+.send-btn {
+    display: block;
+    width: 20%;
+    padding: 10px 0;
+    margin-top: 20px;
+    margin-left: auto;
+    border: none;
+    background-color: #000;
+    color: #fff;
+    font-size: 18px;
     font-weight: bold;
-    text-align: center;
-    margin: 20px 0;
+    border-radius: 8px;
+    cursor: pointer;
 }

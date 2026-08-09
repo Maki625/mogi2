@@ -5,26 +5,26 @@
 <link href="{{ asset('css/admin/attendance/show.css') }}" rel="stylesheet">
 
 <div class="container">
-<h1 class="title">勤怠詳細</h1>
+    <h1 class="title">勤怠詳細</h1>
 
-@if($errors->any())
-<ul class="error-list">
-    @foreach($errors->all() as $error)
-        <li>{{ $error }}</li>
-    @endforeach
-</ul>
-@endif
+    @if($errors->any())
+    <ul class="error-list">
+        @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+        @endforeach
+    </ul>
+    @endif
 
-@php
-    $break1 = $correctionBreaks[0] ?? null;
-    $break2 = $correctionBreaks[1] ?? null;
-@endphp
+    @php
+        $break1 = $correctionBreaks[0] ?? null;
+        $break2 = $correctionBreaks[1] ?? null;
+    @endphp
 
-@if(!$pending)
-<form method="POST" action="/admin/attendance/fix/{{ $attendance->id }}">
-    @csrf
-    @method('PUT')
-@endif
+    @if(!$pending)
+    <form method="POST" action="/admin/attendance/fix/{{ $user->id }}/{{ $date->format('Y-m-d') }}">
+        @csrf
+        @method('PUT')
+    @endif
 
 <table class="detail-table">
 
@@ -35,7 +35,11 @@
 
     <tr>
         <th class="label">日付</th>
-        <td class="value">{{ $date->format('Y年n月j日') }}</td>
+        <td class="value">
+            <span class="date-year">{{ $date->format('Y年') }}</span>
+            <span class="date-month">{{ $date->format('n月j日') }}</span>
+        </td>
+
     </tr>
 
     <tr>
@@ -44,13 +48,15 @@
             <input
                 type="time"
                 name="clock_in"
-                value="{{ old('clock_in', $correction?->clock_in?->format('H:i') ?? optional($attendance->clock_in)->format('H:i')) }}"
+                value="{{ old('clock_in', $correction?->clock_in?->format('H:i') ?? $attendance?->clock_in?->format('H:i')) }}"
                 @if($pending) disabled @endif>
+
+            <span>〜</span>
 
             <input
                 type="time"
                 name="clock_out"
-                value="{{ old('clock_out', $correction?->clock_out?->format('H:i') ?? optional($attendance->clock_out)->format('H:i')) }}"
+                value="{{ old('clock_out', $correction?->clock_out?->format('H:i') ?? $attendance?->clock_out?->format('H:i')) }}"
                 @if($pending) disabled @endif>
         </td>
     </tr>
@@ -110,25 +116,25 @@
 
 </table>
 
-@if($pending)
-    <p class="pending-message">
-        修正申請が提出されています。<br>
-    <a href="/admin/stamp_correction_request/list" class="nav-link1">申請一覧</a>から内容を確認してください。
-    </p>
-@endif
+    @if($pending)
+        <p class="pending-message">
+            修正申請が提出されています。<br>
+        <a href="/admin/stamp_correction_request/list" class="fix-nav">申請一覧</a>から内容を確認してください。
+        </p>
+    @endif
 
-@if(!$pending)
-    <button type="submit" name="send" class="send-btn" value="fix">
-    修正する
-    </button>
-</form>
-@endif
+    @if(!$pending)
+        <button type="submit" name="send" class="send-btn" value="fix">
+        修正する
+        </button>
+    </form>
+    @endif
 
-@if(session('success'))
-    <p class="success-message">
-        {{ session('success') }}
-    </p>
-@endif
+    @if(session('success'))
+        <p class="success-message">
+            {{ session('success') }}
+        </p>
+    @endif
 </div>
 
 @endsection
