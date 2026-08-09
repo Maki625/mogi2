@@ -61,13 +61,23 @@ public function withValidator($validator)
         $b1s = request('break1_start') ? Carbon::parse(request('break1_start')) : null;
         $b1e = request('break1_end') ? Carbon::parse(request('break1_end')) : null;
 
+        // 休憩開始が出勤より前、または退勤より後
         if ($b1s && ($b1s < $in || $b1s > $out)) {
-    $validator->errors()->add(
+            $validator->errors()->add(
                 'break1_start',
                 '休憩時間が不適切な値です'
             );
         }
 
+        // 休憩終了が休憩開始より前
+        if ($b1s && $b1e && $b1e < $b1s) {
+            $validator->errors()->add(
+                'break1_end',
+                '休憩時間が不適切な値です'
+            );
+        }
+
+        // 休憩終了が退勤より後
         if ($b1e && ($b1e > $out)) {
             $validator->errors()->add(
                 'break1_end',
@@ -79,6 +89,7 @@ public function withValidator($validator)
         $b2s = request('break2_start') ? Carbon::parse(request('break2_start')) : null;
         $b2e = request('break2_end') ? Carbon::parse(request('break2_end')) : null;
 
+        // 休憩開始が出勤より前、または退勤より後
         if ($b2s && ($b2s < $in || $b2s > $out)) {
             $validator->errors()->add(
                 'break2_start',
@@ -86,6 +97,15 @@ public function withValidator($validator)
             );
         }
 
+        // 休憩終了が休憩開始より前
+        if ($b2s && $b2e && $b2e < $b2s) {
+            $validator->errors()->add(
+                'break2_end',
+                '休憩時間が不適切な値です'
+            );
+        }
+
+        // 休憩終了が退勤より後
         if ($b2e && ($b2e > $out)) {
             $validator->errors()->add(
                 'break2_end',

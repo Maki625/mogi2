@@ -1,6 +1,58 @@
+/* 全体 */
 .container {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 40px 20px;
-    box-sizing: border-box;
+    width: 70%;
+    max-width: none;
+    margin: 60px auto;
+}
+
+.title {
+    margin-bottom: 30px;
+    padding-left: 12px;
+    border-left: 4px solid #000;
+    font-size: 28px;
+}
+
+table {
+    width: 100%;
+    background-color: #fff;
+    border-collapse: collapse;
+    border: none;
+    border-radius: 8px;
+}
+
+/* 見出し */
+th {
+    color: grey;
+    height: 55px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/* 各行 */
+td {
+    color: grey;
+    height: 55px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* 横線だけ */
+th,
+td {
+    border: none;
+    border-bottom: 1px solid #ddd;
+}
+
+/* 最後の行だけ線を消す */
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* 詳細リンク */
+.content-nav {
+    color: #000;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 16px;
 }

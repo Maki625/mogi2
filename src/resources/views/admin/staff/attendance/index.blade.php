@@ -3,47 +3,52 @@
 @section('content')
 
 <main>
-<link href="{{ asset('css/admin/attendance.css') }}" rel="stylesheet">
+<link href="{{ asset('css/admin/staff/attendance.css') }}" rel="stylesheet">
 
-<h2>{{ $user->name }}さんの勤怠一覧</h2>
+<div class="container">
+    <h1 class="title">{{ $user->name }}さんの勤怠一覧</h1>
 
-<a href="{{ url()->current() }}?month={{ $month->copy()->subMonth()->format('Y-m') }}">
-    前月
-</a>
+    <div class="month-navigation">
+        <a href="{{ url()->current() }}?month={{ $month->copy()->subMonth()->format('Y-m') }}" class="month-nav">
+        ←前月
+        </a>
 
-<h2>{{ $month->format('Y/m') }}</h2>
+        <h2 class="month">
+        <img src="/images/calendar.jpeg" alt="" class="calendar-icon">{{ $month->format('Y/m') }}</h2>
 
-<a href="{{ url()->current() }}?month={{ $month->copy()->addMonth()->format('Y-m') }}">
-    次月
-</a>
+        <a href="{{ url()->current() }}?month={{ $month->copy()->addMonth()->format('Y-m') }}" class="month-nav">
+        次月→
+        </a>
+    </div>
 
-<table border="1" cellspacing="0" cellpadding="8">
-    <tr>
-        <th class="date">日付</th>
-        <th class="clock_in">出勤</th>
-        <th class="clock_out">退勤</th>
-        <th class="break_time">休憩</th>
-        <th class="break_total">合計</th>
-        <th class="content">詳細</th>
-    </tr>
-    @foreach ($dates as $date)
-
-    @php
-        $attendance = $attendanceMap[$date->format('Y-m-d')] ?? null;
-    @endphp
-
+    <table>
         <tr>
-            <td>{{ $date->isoformat('MM/DD(ddd)') }}</td>
-            <td>{{ $attendance?->clock_in?->format('H:i') }}</td>
-            <td>{{ $attendance?->clock_out?->format('H:i') }}</td>
-            <td>{{ $attendance?->show_break_time }}</td>
-            <td>{{ $attendance?->show_work_time }}</td>
-        <td>
-            <a href="/admin/attendance/{{ $user->id }}/{{ $date->format('Y-m-d') }}" class="content">詳細</a>
-        </td>
-    </tr>
-    @endforeach
-</table>
+            <th class="date">日付</th>
+            <th class="clock_in">出勤</th>
+            <th class="clock_out">退勤</th>
+            <th class="break_time">休憩</th>
+            <th class="break_total">合計</th>
+            <th class="content">詳細</th>
+        </tr>
+        @foreach ($dates as $date)
+
+        @php
+            $attendance = $attendanceMap[$date->format('Y-m-d')] ?? null;
+        @endphp
+
+            <tr>
+                <td>{{ $date->isoFormat('MM/DD(ddd)') }}</td>
+                <td>{{ $attendance?->clock_in?->format('H:i') }}</td>
+                <td>{{ $attendance?->clock_out?->format('H:i') }}</td>
+                <td>{{ $attendance?->show_break_time }}</td>
+                <td>{{ $attendance?->show_work_time }}</td>
+            <td>
+                <a href="/admin/attendance/{{ $user->id }}/{{ $date->format('Y-m-d') }}" class="content-nav">詳細</a>
+            </td>
+        </tr>
+        @endforeach
+    </table>
+</div>
 </main>
 
 @endsection

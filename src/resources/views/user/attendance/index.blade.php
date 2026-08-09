@@ -14,7 +14,7 @@
         </a>
 
         <h2 class="month">
-            <img src="/images/calendar.jpeg" alt="" class="calendar-icon">{{ $month->format('Y/m') }}</h2>
+        <img src="/images/calendar.jpeg" alt="" class="calendar-icon">{{ $month->format('Y/m') }}</h2>
 
         <a href="{{ url()->current() }}?month={{ $month->copy()->addMonth()->format('Y-m') }}" class="month-nav">
             翌月→
@@ -37,7 +37,7 @@
         @endphp
 
             <tr>
-                <td>{{ $date->isoformat('MM/DD(ddd)') }}</td>
+                <td>{{ $date->isoFormat('MM/DD(ddd)') }}</td>
                 <td>{{ $attendance?->clock_in?->format('H:i') }}</td>
                 <td>{{ $attendance?->clock_out?->format('H:i') }}</td>
                 <td>{{ $attendance?->show_break_time }}</td>

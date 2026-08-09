@@ -6,17 +6,16 @@
 <link href="{{ asset('css/admin/attendance/index.css') }}" rel="stylesheet">
 
 <div class="container">
-    <h2 class="title">{{ $date->format('Y年m月d日の勤怠') }}</h2>
+    <h2 class="title">{{ $date->format('Y年n月j日の勤怠') }}</h2>
 
-    <div class="month-navigation">
-
-        <a href="/admin/attendance/list?date={{ $date->copy()->subDay()->format('Y-m-d') }}" class="month-nav">
+    <div class="date-navigation">
+        <a href="/admin/attendance/list?date={{ $date->copy()->subDay()->format('Y-m-d') }}" class="date-nav">
             ←前日
         </a>
 
-        <h2 class="month"><img src="/images/calendar.jpeg" alt="" class="calendar-icon">{{ $date->format('Y/m') }}</h2>
+        <h2 class="date"><img src="/images/calendar.jpeg" alt="" class="calendar-icon">{{ $date->format('Y/m/d') }}</h2>
 
-        <a href="/admin/attendance/list?date={{ $date->copy()->addDay()->format('Y-m-d') }}" class="month-nav">
+        <a href="/admin/attendance/list?date={{ $date->copy()->addDay()->format('Y-m-d') }}" class="date-nav">
             翌日→
         </a>
     </div>

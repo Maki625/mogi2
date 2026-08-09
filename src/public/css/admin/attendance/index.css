@@ -13,8 +13,7 @@
     font-size: 28px;
 }
 
-/* 月移動 */
-.month-navigation {
+.date-navigation {
     width: 100%;
     height: 70px;
     font-weight: bold;
@@ -28,19 +27,13 @@
     margin-bottom: 30px;
 }
 
-.month-nav {
+.date-nav {
     color: grey;
     text-decoration: none;
     font-size: 16px;
 }
 
-.month-navigation h2 {
-    margin: 0;
-    font-size: 20px;
-    font-weight: normal;
-}
-
-.month {
+.date {
     display: flex;
     font-weight: bold;
     align-items: center;
@@ -56,7 +49,6 @@
     height: 30px;
 }
 
-/* 勤怠表 */
 table {
     width: 100%;
     background-color: #fff;
