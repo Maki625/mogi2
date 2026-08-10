@@ -37,7 +37,11 @@
             <td>{{ $request->reason }}</td>
             <td>{{ $request->created_at->format('Y/m/d') }}</td>
             <td>
-            <a href="/stamp_correction_request/approve/{{ $request->id }}" class="content-nav">詳細</a>
+                @if($request->status === 'pending')
+                <a href="/stamp_correction_request/approve/{{ $request->id }}" class="content-nav">詳細</a>
+                @elseif($request->status === 'approved')
+                <a href="/admin/attendance/{{ $request->user_id }}/{{ $request->attendance->work_date->format('Y-m-d') }}" class="content-nav">詳細</a>
+                @endif
             </td>
         </tr>
         @endforeach

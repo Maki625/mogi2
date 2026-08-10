@@ -123,18 +123,17 @@
         </p>
     @endif
 
-    @if(!$pending)
+    @if(session('success'))
+        <p class="success-message">
+            {{ session('success') }}
+        </p>
+    @else
         <button type="submit" name="send" class="send-btn" value="fix">
         修正する
         </button>
     </form>
     @endif
 
-    @if(session('success'))
-        <p class="success-message">
-            {{ session('success') }}
-        </p>
-    @endif
 </div>
 
 @endsection

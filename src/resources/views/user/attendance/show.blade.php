@@ -94,8 +94,7 @@
             <td class="value">
                 <textarea name="reason" class="text-area @if($pending) pending-input @endif"
                 @if($pending) disabled @endif
-                >{{ old(
-                'reason',
+                >{{ old( 'reason',
                 $pending
                 ? $correction?->reason
                 : $attendance?->reason) }}

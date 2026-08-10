@@ -27,12 +27,12 @@
             <th class="label">出勤・退勤</th>
             <td class="value">
                 <input type="time"
-                    value="{{ $correction?->clock_in?->format('H:i') }}"
-                    disabled>
+                    value="{{ $correction?->clock_in?->format('H:i') }}" disabled>
+
+                <span>〜</span>
 
                 <input type="time"
-                    value="{{ $correction?->clock_out?->format('H:i') }}"
-                    disabled>
+                    value="{{ $correction?->clock_out?->format('H:i') }}" disabled>
             </td>
         </tr>
 
@@ -46,7 +46,7 @@
                 <span>〜</span>
 
                 <input type="time"
-                    value="{{ $break1?->break_end?->format('H:i') }}"
+                    value="{{ $break1?->break_start?->format('H:i') }}"
                     disabled>
             </td>
         </tr>
@@ -78,20 +78,21 @@
     </table>
 
     @if($pending)
-    <form method="POST" action="/admin/correction/{{ $correction->id }}/approve">
-        @csrf
+        <form method="POST" action="/admin/correction/{{ $correction->id }}/approve">
+            @csrf
 
-        <button type="submit" class="send-btn">
-            承認する
-        </button>
-    </form>
-    @endif
+            <button type="submit" class="send-btn">
+                承認する
+            </button>
+        </form>
 
-    @if($approved)
+    @elseif(session('success'))
         <p class="approved-btn">
-            承認済み
+            {{ session('success') }}
         </p>
+
     @endif
+
 </div>
 
 @endsection

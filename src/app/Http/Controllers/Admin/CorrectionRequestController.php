@@ -50,7 +50,6 @@ class CorrectionRequestController extends Controller
     $date = $attendance->work_date;
 
     $pending = $correction->status === 'pending';
-    $approved = $correction->status === 'approved';
 
     $correctionBreaks = $correction->correctionWorkBreaks;
 
@@ -60,7 +59,6 @@ class CorrectionRequestController extends Controller
         'user',
         'date',
         'pending',
-        'approved',
         'correctionBreaks'
     ));
 }
@@ -98,6 +96,6 @@ class CorrectionRequestController extends Controller
             'status' => 'approved',
         ]);
 
-        return back();
+        return back()->with('success', '承認済み');
     }
 }

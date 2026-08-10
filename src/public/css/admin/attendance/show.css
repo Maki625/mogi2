@@ -119,6 +119,17 @@ textarea.pending-input {
     text-align: left;
 }
 
+.pending-message {
+    text-align: right;
+}
+
+.fix-nav {
+    font-weight: bold;
+    text-decoration: none;
+    color: #000;
+    cursor: pointer;
+}
+
 .success-message {
     text-align: right;
     color: orange;

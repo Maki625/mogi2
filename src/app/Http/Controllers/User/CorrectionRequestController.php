@@ -37,7 +37,7 @@ class CorrectionRequestController extends Controller
 
         $user = Auth::user();
 
-        $date = Carbon::perse($id);
+        $date = Carbon::parse($id);
 
         $attendance = Attendance::where('user_id', $user->id)
         ->where('work_date', $date)

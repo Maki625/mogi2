@@ -223,7 +223,7 @@ class AttendanceController extends Controller
 
         return redirect()
                 ->back()
-                ->with('message', '修正しました。');
+                ->with('success', '修正しました。');
         }
 
 }
