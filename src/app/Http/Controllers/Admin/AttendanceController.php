@@ -149,6 +149,93 @@ class AttendanceController extends Controller
         ));
         }
 
+        //CSV出力
+        public function csv(Request $request, $id)
+        {
+        $month = $request->month
+                ? Carbon::parse($request->month)
+                : now();
+
+        $start = $month->copy()->startOfMonth();
+        $end = $month->copy()->endOfMonth();
+
+        $user = User::findOrFail($id);
+
+        $attendances = Attendance::with('workBreaks')
+                ->where('user_id', $id)
+                ->whereBetween('work_date', [$start, $end])
+                ->orderBy('work_date', 'desc')
+                ->get();
+
+        return response()->streamDownload(function () use ($attendances) {
+
+                $handle = fopen('php://output', 'w');
+
+                // Excelで日本語が文字化けしないようにBOMを付ける
+                fwrite($handle, "\xEF\xBB\xBF");
+
+                fputcsv($handle, [
+                '日付',
+                '出勤',
+                '退勤',
+                '休憩',
+                '合計',
+                ]);
+
+                foreach ($attendances as $attendance) {
+
+                $totalMinutes = 0;
+
+                foreach ($attendance->workBreaks as $break) {
+
+                        if ($break->break_start && $break->break_end) {
+
+                        $breakStart = Carbon::parse($break->break_start);
+                        $breakEnd = Carbon::parse($break->break_end);
+
+                        $totalMinutes += $breakStart->diffInMinutes($breakEnd);
+                        }
+                }
+
+                $breakTime = $totalMinutes > 0
+                        ? sprintf(
+                        '%02d:%02d',
+                        intdiv($totalMinutes, 60),
+                        $totalMinutes % 60
+                        )
+                        : '';
+
+                if ($attendance->clock_in && $attendance->clock_out) {
+
+                        $workMinutes =
+                        $attendance->clock_in->diffInMinutes($attendance->clock_out)
+                        - $totalMinutes;
+
+                        $workTime = sprintf(
+                        '%02d:%02d',
+                        intdiv($workMinutes, 60),
+                        $workMinutes % 60
+                        );
+
+                } else {
+
+                        $workTime = '';
+                }
+
+                fputcsv($handle, [
+                        $attendance->work_date->format('Y/m/d'),
+                        $attendance->clock_in?->format('H:i'),
+                        $attendance->clock_out?->format('H:i'),
+                        $breakTime,
+                        $workTime,
+                ]);
+                }
+
+                fclose($handle);
+
+        }, $user->name . '_勤怠_' . $month->format('Y-m') . '.csv');
+        }
+
         //詳細
         public function show($user_id, $date)
         {

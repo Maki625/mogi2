@@ -1,0 +1,47 @@
+.container {
+    width: 70%;
+    max-width: none;
+    margin: 60px auto;
+    background-color: #fff;
+}
+
+.title {
+    margin-bottom: 30px;
+    padding-left: 12px;
+    font-size: 28px;
+}
+
+table {
+    width: 100%;
+    background-color: #fff;
+    border-collapse: collapse;
+    border: none;
+    border-radius: 8px;
+}
+
+/* 見出し */
+th {
+    height: 55px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/* 各行 */
+td {
+    height: 55px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* 横線だけ */
+th,
+td {
+    border: none;
+    border-bottom: 1px solid #ddd;
+}
+
+/* 最後の行だけ線を消す */
+tr:last-child td {
+    border-bottom: none;
+}

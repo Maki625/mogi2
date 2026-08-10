@@ -48,6 +48,9 @@
         </tr>
         @endforeach
     </table>
+
+    <a href="/admin/attendance/list/{{ $user->id }}/csv?month={{ $month->format('Y-m') }}" class="csv-btn">
+    CSV出力</a>
 </div>
 </main>
 

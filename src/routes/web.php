@@ -49,6 +49,9 @@ Route::post('/attendance/break/end', [UserAttendanceController::class, 'breakEnd
 // 退勤
 Route::post('/attendance/end', [UserAttendanceController::class, 'end']);
 
+//勤怠レポートページ
+Route::get('/attendance/report', [UserAttendanceController::class, 'report']);
+
 //勤怠一覧ページ
 Route::get('/attendance/list', [UserAttendanceController::class, 'list']);
 
@@ -62,7 +65,6 @@ Route::post('/attendance/fix/{id}', [UserCorrectionRequestController::class, 'st
 Route::get('/stamp_correction_request/list', [UserCorrectionRequestController::class, 'index']);
 
 
-
 //管理者ホーム
 Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index'])
     ->name('admin.attendance.index');
@@ -72,6 +74,9 @@ Route::get('/admin/staff/list', [AdminUserController::class, 'index']);
 
 //スタッフ別勤怠一覧ページ
 Route::get('/admin/attendance/list/{id}', [AdminAttendanceController::class, 'list']);
+
+// スタッフ別勤怠CSV出力
+Route::get('/admin/attendance/list/{id}/csv', [AdminAttendanceController::class, 'csv']);
 
 //スタッフ別勤怠詳細ページ
 Route::get('/admin/attendance/{user_id}/{date}', [AdminAttendanceController::class, 'show']);
