@@ -62,7 +62,7 @@
         @endforeach
     </table>
 
-    <h4 class="text-a">異常検知</h4>
+    <h4 class="text-a">今月の異常検知</h4>
     <p class="box-title">基準：始業09:00/終業 18:00/長時間労働は一日10時間超</p>
 
     <div class="summary">

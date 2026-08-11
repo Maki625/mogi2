@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Actions\Fortify\CreateNewUser;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Contracts\VerifyEmailViewResponse;
 use Laravel\Fortify\Contracts\RegisterResponse;
 use Laravel\Fortify\Contracts\LoginResponse;
 use Laravel\Fortify\Contracts\LogoutResponse;
@@ -72,6 +73,10 @@ class FortifyServiceProvider extends ServiceProvider
                         : redirect('/attendance');
                 }
             };
+        });
+
+        Fortify::verifyEmailView(function () {
+        return view('auth.verify-email');
         });
 
         $this->app->instance(LogoutResponse::class, new class implements LogoutResponse {

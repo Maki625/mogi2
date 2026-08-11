@@ -1,0 +1,47 @@
+.mail-page {
+    background-color: #fff;
+    min-height: calc(100vh - 81px);
+    padding-top: 60px;
+}
+
+.container {
+    color: #fff;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    margin: 80px auto 0;
+}
+
+.text1, .text2 {
+    color: #000;
+    font-weight: bold;
+}
+
+.text2 {
+    margin-top: 2px;
+}
+
+.link-btn {
+    width: 40%;
+    padding: 10px 0;
+    margin-top: 5px;
+    background-color: #f2f1f1f0;
+    color: #000;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: 1px solid;
+    cursor: pointer;
+}
+
+.resend {
+    border: none;
+    color: blue;
+    margin-top: 30px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0;
+    align-items: center;
+    background-color: #fff;
+}

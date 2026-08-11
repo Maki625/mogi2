@@ -35,6 +35,7 @@ Route::middleware('admin')->group(function () {
 
 //一般ユーザーホーム
 Route::get('/attendance', [UserAttendanceController::class, 'index'])
+    ->middleware('auth', 'verified')
     ->name('user.attendance.index');
 
 // 出勤
