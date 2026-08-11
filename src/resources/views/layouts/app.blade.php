@@ -26,34 +26,36 @@
 
         <nav class="header_nav">
             @auth
-            @if (auth()->user()->admin_status)
-            <a href="/admin/attendance/list" class="nav-link">勤怠一覧</a>
+            @if (auth()->user()->hasVerifiedEmail())
+                @if (auth()->user()->admin_status)
+                <a href="/admin/attendance/list" class="nav-link">勤怠一覧</a>
 
-            <a href="/admin/staff/list" class="nav-link">スタッフ一覧</a>
+                <a href="/admin/staff/list" class="nav-link">スタッフ一覧</a>
 
-            <a href="/admin/stamp_correction_request/list" class="nav-link">申請一覧</a>
+                <a href="/admin/stamp_correction_request/list" class="nav-link">申請一覧</a>
 
-            <form action="/logout" method="POST">
-                @csrf
-                <input type="hidden" name="logout_type" value="admin">
-                <button type="submit" class="nav-link">ログアウト</button>
-                </input>
-            </form>
-            @else
-            <a href="/attendance" class="nav-link">勤怠</a>
+                <form action="/logout" method="POST">
+                    @csrf
+                    <input type="hidden" name="logout_type" value="admin">
+                    <button type="submit" class="nav-link">ログアウト</button>
+                    </input>
+                </form>
+                @else
+                <a href="/attendance" class="nav-link">勤怠</a>
 
-            <a href="/attendance/list" class="nav-link">勤怠一覧</a>
+                <a href="/attendance/list" class="nav-link">勤怠一覧</a>
 
-            <a href="/stamp_correction_request/list" class="nav-link">申請</a>
+                <a href="/stamp_correction_request/list" class="nav-link">申請</a>
 
-            <a href="/attendance/report" class="nav-link">レポート</a>
+                <a href="/attendance/report" class="nav-link">レポート</a>
 
-            <form id="logout-form" action="/logout" method="POST">
-                @csrf
-                <button type="submit" class="nav-link">
-                ログアウト
-                </button>
-            </form>
+                <form id="logout-form" action="/logout" method="POST">
+                    @csrf
+                    <button type="submit" class="nav-link">
+                    ログアウト
+                    </button>
+                </form>
+                @endif
             @endif
             @endauth
         </nav>
