@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Actions\Fortify\CreateNewUser;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
+use Laravel\Fortify\Contracts\VerifyEmailResponse;
 use Laravel\Fortify\Contracts\VerifyEmailViewResponse;
 use Laravel\Fortify\Contracts\RegisterResponse;
 use Laravel\Fortify\Contracts\LoginResponse;
@@ -63,6 +64,12 @@ class FortifyServiceProvider extends ServiceProvider
             return view('user.login');
         });
 
+        $this->app->instance(VerifyEmailResponse::class, new class implements VerifyEmailResponse {
+            public function toResponse($request)
+            {
+                return redirect('/attendance');
+            }
+        });
         // ログイン後のリダイレクト先を変更
         $this->app->singleton(LoginResponse::class, function () {
             return new class implements LoginResponse {
