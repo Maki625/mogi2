@@ -1,17 +1,19 @@
 @extends('layouts.app')
 
 @section('content')
- <link href="{{ asset('css/auth/mail-b.css') }}" rel="stylesheet">
+<link href="{{ asset('css/auth/mail-b.css') }}" rel="stylesheet">
 
-<h2>メール認証</h2>
+<main class="mail-page">
+    <div class="container">
+    <p>
+        登録したメールアドレスに届いたメールを確認してください。
+    </p>
 
-<p>
-    登録したメールアドレスに届いたメールを確認してください。
-</p>
+    <p>
+        メールに記載されている認証リンクをクリックすると、
+        メール認証が完了します。
+    </p>
+    </div>
 
-<p>
-    メールに記載されている認証リンクをクリックすると、
-    メール認証が完了します。
-</p>
-
+</main>
 @endsection

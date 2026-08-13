@@ -33,6 +33,11 @@ Route::middleware('admin')->group(function () {
     Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'index']);
 });
 
+//メール認証画面
+Route::get('/email/verify-confirm', function () {
+    return view('auth.verify');
+})->middleware('auth');
+
 //一般ユーザーホーム
 Route::get('/attendance', [UserAttendanceController::class, 'index'])
     ->middleware('auth', 'verified')

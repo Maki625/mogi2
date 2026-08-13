@@ -9,7 +9,7 @@
     <span class="text1">登録していただいたメールアドレスに認証メールを送信しました。</span>
     <p class="text2">メール認証を完了してください。</p>
 
-    <a href="/email/verify">
+    <a href="/email/verify-confirm">
         <button type="button" class="link-btn">
             認証はこちらから
         </button>
