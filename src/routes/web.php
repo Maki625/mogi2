@@ -56,7 +56,8 @@ Route::post('/attendance/break/end', [UserAttendanceController::class, 'breakEnd
 Route::post('/attendance/end', [UserAttendanceController::class, 'end']);
 
 //勤怠レポートページ
-Route::get('/attendance/report', [UserAttendanceController::class, 'report']);
+Route::get('/attendance/report', [UserAttendanceController::class, 'report'])
+    ->middleware('auth');
 
 //勤怠一覧ページ
 Route::get('/attendance/list', [UserAttendanceController::class, 'list']);

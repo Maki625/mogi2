@@ -175,4 +175,86 @@ class AttendanceTest extends TestCase
         // 休憩時間が表示されていることを確認
         $response->assertSee($attendance->work_date->format('m/d'));
     }
+
+    // ゲストはレポートページにアクセスできない
+        public function test_guest_cannot_access_attendance_report()
+        {
+            $response = $this->get('attendance/report');
+
+            $response->assertRedirect('/login');
+
+        }
+
+    // 勤怠記録がないユーザーで安全に処理される
+        public function test_user_with_no_attendance_records_can_access_report()
+        {
+            $user = User::factory()->create();
+
+            $response = $this->actingAs($user)->get('attendance/report');
+
+            $response->assertStatus(200);
+
+            $response->assertViewHas('totalWorkMinutes', 0);
+            $response->assertViewHas('totalOvertimeMinutes', 0);
+            $response->assertViewHas('averageWorkMinutes', 0);
+
+            $response->assertViewHas('monthlyReports', function ($monthlyReports) {
+                return $monthlyReports->every(function ($report) {
+                    return $report['work_minutes'] === 0
+                        && $report['overtime_minutes'] === 0;
+                });
+            });
+
+            $response->assertViewHas('lateCount', 0);
+            $response->assertViewHas('earlyLeaveCount', 0);
+            $response->assertViewHas('longWorkCount', 0);
+        }
+
+        // 認証ユーザーの統計情報が正しく計算される
+public function test_user_attendance_report_calculates_statistics_correctly()
+{
+    $user = User::factory()->create();
+
+    // 1日目：9:00〜18:00、休憩1時間 → 実労働8時間
+    $attendance1 = Attendance::create([
+        'user_id' => $user->id,
+        'work_date' => now()->subDays(2)->format('Y-m-d'),
+        'clock_in' => '09:00:00',
+        'clock_out' => '18:00:00',
+    ]);
+
+    WorkBreak::create([
+        'attendance_id' => $attendance1->id,
+        'break_start' => '12:00:00',
+        'break_end' => '13:00:00',
+    ]);
+
+    // 2日目：9:00〜19:00、休憩1時間 → 実労働9時間
+    $attendance2 = Attendance::create([
+        'user_id' => $user->id,
+        'work_date' => now()->subDays(1)->format('Y-m-d'),
+        'clock_in' => '09:00:00',
+        'clock_out' => '19:00:00',
+    ]);
+
+    WorkBreak::create([
+        'attendance_id' => $attendance2->id,
+        'break_start' => '12:00:00',
+        'break_end' => '13:00:00',
+    ]);
+
+    $response = $this->actingAs($user)->get('/attendance/report');
+
+    $response->assertStatus(200);
+
+    // 総労働時間：8時間 + 9時間 = 17時間
+    $response->assertViewHas('totalWorkMinutes', 1020);
+
+    // 残業時間：1時間
+    $response->assertViewHas('totalOvertimeMinutes', 60);
+
+    // 平均労働時間：17時間 ÷ 2日 = 8時間30分
+    $response->assertViewHas('averageWorkMinutes', 510);
+}
+
 }
